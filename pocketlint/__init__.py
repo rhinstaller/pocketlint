@@ -266,7 +266,12 @@ class PocketLinter(object):
         if lines:
             return ("\n".join(lines), proc.returncode)
 
-        return ([], proc.returncode)
+        return ("", proc.returncode)
+
+    def _print(self, s, fo=None):
+        print(s, flush=True)
+        if fo:
+            print(s, flush=True, file=fo)
 
     def run(self):
         retval = 0
@@ -280,6 +285,8 @@ class PocketLinter(object):
 
         if self._pylint_log:
             fo = open("pylint-log", "w")
+        else:
+            fo = None
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
             jobs = []
@@ -291,11 +298,21 @@ class PocketLinter(object):
 
                 output = result[0].strip()
                 if output:
-                    print(output, flush=True)
-                    if self._pylint_log:
-                        print(output, flush=True, file=fo)
+                    self._print(output, fo)
 
                 if result[1] > retval:
                     retval = result[1]
+
+        unusedFPs = []
+
+        for fp in self._config.falsePositives:
+            if fp.used == 0:
+                unusedFPs.append(fp.regex)
+
+        if unusedFPs:
+            self._print("************* Unused False Positives Found:", fo)
+
+            for fp in unusedFPs:
+                self._print(fp, fo)
 
         return retval
