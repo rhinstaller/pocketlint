@@ -278,6 +278,9 @@ class PocketLinter(object):
         if not files:
             files = self._files
 
+        if self._pylint_log:
+            fo = open("pylint-log", "w")
+
         with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
             jobs = []
             for f in files:
@@ -289,6 +292,8 @@ class PocketLinter(object):
                 output = result[0].strip()
                 if output:
                     print(output, flush=True)
+                    if self._pylint_log:
+                        print(output, flush=True, file=fo)
 
                 if result[1] > retval:
                     retval = result[1]
