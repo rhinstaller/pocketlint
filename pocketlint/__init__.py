@@ -197,7 +197,7 @@ class PocketLinter(object):
         # We need top_builddir to be set so we know where to put the pylint analysis
         # stuff.  Usually this will be set up if we are run via "make test" but if
         # not, hope that we are at least being run out of the right directory.
-        builddir = os.environ.get("builddir", os.getcwd())
+        builddir = os.environ.get("top_builddir", os.getcwd())
 
         # XDG_RUNTIME_DIR is "required" to be set, so make one up in case something
         # actually tries to do something with it.
