@@ -137,7 +137,7 @@ class MarkupChecker(BaseChecker):
                 # If not done already, import polib and read the translations
                 if not podicts:
                     try:
-                        from translatepo import translate_all
+                        from pocketlint.translatepo import translate_all
                     except ImportError:
                         print("Unable to load po translation module")
                         sys.exit(99)

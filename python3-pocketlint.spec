@@ -13,7 +13,9 @@ BuildRequires: python3-devel
 BuildRequires: python3-pylint
 BuildRequires: python3-setuptools
 
+Requires: python3-polib
 Requires: python3-pylint
+Requires: python3-six
 
 %description
 Addon pylint modules and configuration settings for checking the validity of
