@@ -5,16 +5,19 @@ PREFIX=/usr
 
 PYTHON?=python3
 
+build:
+	$(PYTHON) setup.py build
+
 check:
 	@echo "*** Running pylint to verify source ***"
-	tests/pylint/runpylint.py
+	PYTHONPATH=./build/lib tests/pylint/runpylint.py
 
 clean:
 	-rm pylint-log
 	$(PYTHON) setup.py -q clean --all
 
 install:
-	$(PYTHON) setup.py install --root=$(DESTDIR)
+	$(PYTHON) setup.py install --root=$(DESTDIR) --skip-build
 
 tag:
 	git tag -a -m "Tag as $(VERSION)" -f $(VERSION)

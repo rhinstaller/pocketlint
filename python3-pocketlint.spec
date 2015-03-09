@@ -11,7 +11,6 @@ BuildArch: noarch
 
 BuildRequires: python3-devel
 BuildRequires: python3-pylint
-BuildRequires: python3-setuptools
 
 Requires: python3-polib
 Requires: python3-pylint
@@ -28,7 +27,6 @@ Python-based source projects.
 make %{?_smp_mflags}
 
 %install
-rm -rf %{buildroot}
 %make_install
 
 %check
