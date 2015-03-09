@@ -5,7 +5,7 @@ Summary:   Support for running pylint against projects
 
 License:   GPLv2+
 Url:       https://github.com/rhinstaller/pocketlint
-Source0:   https://github.com/rhinstaller/pocketlint/archive/pocketlint-%{version}.tar.gz
+Source0:   https://github.com/rhinstaller/pocketlint/archive/%{version}/pocketlint-%{version}.tar.gz
 
 BuildArch: noarch
 
