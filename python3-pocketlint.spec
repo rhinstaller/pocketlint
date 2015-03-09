@@ -11,6 +11,7 @@ BuildArch: noarch
 
 BuildRequires: python3-devel
 BuildRequires: python3-pylint
+BuildRequires: python3-six
 
 Requires: python3-polib
 Requires: python3-pylint
