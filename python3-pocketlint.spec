@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.1
+Version:   0.2
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,5 +39,10 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Tue Mar 10 2015 Chris Lumens <clumens@redhat.com> - 0.2-1
+- BuildRequires python3-six too. (clumens)
+- Fix up Fedora package review problems (#1200119). (clumens)
+- Add translatepo from anaconda so the markup checker works. (clumens)
+
 * Mon Mar  9 2015 Chris Lumens <clumens@redhat.com> - 0.1-1
 - Initial packaging of pocketlint.
