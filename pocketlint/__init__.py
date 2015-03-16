@@ -236,11 +236,11 @@ class PocketLinter(object):
             else:
                 validError = True
 
-                for r in self._config.falsePositives:
-                    if re.match(r.regex, line):
+                for regex in self._config.falsePositives:
+                    if re.search(regex.regex, line):
                         # The false positive was hit, so record that and ignore
                         # the message from pylint.
-                        r.used += 1
+                        regex.used += 1
                         validError = False
                         break
 
