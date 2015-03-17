@@ -141,6 +141,7 @@ class PointlessAssignment(PointlessData):
     message_id = "W9951"
 
     _VALUE_CLASSES = (
+        astroid.CallFunc,
         astroid.Const,
         astroid.Dict,
         astroid.List,
@@ -162,6 +163,24 @@ class PointlessAssignment(PointlessData):
                all(cls.check_equal(n, o) for (n, o) in zip(node.elts, other.elts))
         if isinstance(node, astroid.Dict):
             return len(node.items) == len(other.items)
+        if isinstance(node, astroid.CallFunc):
+            if type(node.func) != type(other.func):
+                return False
+
+            if isinstance(node.func, astroid.Getattr):
+                if node.func.attrname != other.func.attrname or \
+                   type(node.func.expr) != type(other.func.expr) or \
+                   node.func.expr.name != other.func.expr.name:
+                    return False
+            elif isinstance(node.func, astroid.Name):
+                if node.func.name != other.func.name:
+                    return False
+            else:
+                return False
+
+            return node.starargs == other.starargs and \
+               node.kwargs == other.kwargs and \
+               all(cls.check_equal(n, o) for (n, o) in zip(node.args, other.args))
         return False
 
     @staticmethod
@@ -225,13 +244,13 @@ class PointlessClassAttributeOverrideChecker(BaseChecker):
     msgs = {
        "W9951":
        (
-          "Assignment to class attribute %s overrides identical assignment in ancestor.",
+          "Assignment to class attribute %s overrides identical assignment in ancestor %s.",
           "pointless-class-attribute-override",
           "Assignment to class attribute  that overrides assignment in ancestor that assigns identical value has no effect."
        ),
        "W9952":
        (
-          "definition of %s method overrides identical method definition in ancestor",
+          "Definition of %s method overrides identical method definition in ancestor %s.",
           "pointless-method-definition-override",
           "Overriding empty method definition with another empty method definition has no effect."
        )
@@ -245,7 +264,7 @@ class PointlessClassAttributeOverrideChecker(BaseChecker):
                     match = next((v for (n, v) in checker.get_data(a, False) if n == name), None)
                     if match is not None:
                         if checker.check_equal(value, match):
-                            self.add_message(checker.message_id, node=value, args=(name,))
+                            self.add_message(checker.message_id, node=value, args=(name,a.name))
                         break
 
 def register(linter):
