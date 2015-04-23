@@ -266,7 +266,7 @@ class PocketLinter(object):
         if lines:
             return ("\n".join(lines), proc.returncode)
 
-        return ("", proc.returncode)
+        return ("", 0)
 
     def _print(self, s, fo=None):
         print(s, flush=True)
