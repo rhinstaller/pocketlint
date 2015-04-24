@@ -155,7 +155,7 @@ class PocketLinter(object):
 
     @property
     def _pylint_args(self):
-        args = [ "--msg-template='{msg_id}:{line:3d},{column}: {obj}: {msg}'",
+        args = [ "--msg-template='{msg_id}({symbol}):{line:3d},{column}: {obj}: {msg}'",
                  "-r", "n",
                  "--disable", "C,R",
                  "--rcfile", "/dev/null",
