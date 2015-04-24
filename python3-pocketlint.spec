@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.3
+Version:   0.4
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,6 +39,11 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Fri Apr 24 2015 Chris Lumens <clumens@redhat.com> - 0.4-1
+- Add symbolic names of messages to the output (vpodzime)
+- If we filtered out all errors as false positives, return 0. (clumens)
+- Fix two instances where check_equal() returned True incorrectly. (amulhern)
+
 * Tue Mar 17 2015 Chris Lumens <clumens@redhat.com> - 0.3-1
 - Updates to pointless-override.py. (amulhern)
 - Use re.search instead of re.match. (clumens)
