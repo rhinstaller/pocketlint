@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.4
+Version:   0.5
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,6 +39,9 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Mon Apr 27 2015 Chris Lumens <clumens@redhat.com> - 0.5-1
+- If we can't open a file to read, skip it. (clumens)
+
 * Fri Apr 24 2015 Chris Lumens <clumens@redhat.com> - 0.4-1
 - Add symbolic names of messages to the output (vpodzime)
 - If we filtered out all errors as false positives, return 0. (clumens)
