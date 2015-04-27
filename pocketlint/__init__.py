@@ -20,7 +20,6 @@
 #
 
 import atexit
-import codecs
 import concurrent.futures
 import os
 import re
@@ -140,8 +139,13 @@ class PocketLinter(object):
 
         for (root, _, files) in os.walk(srcdir):
             for f in files:
-                with codecs.open(root + "/" + f) as fo:
-                    lines = fo.readlines()
+                try:
+                    with open(root + "/" + f) as fo:
+                        lines = fo.readlines()
+                except UnicodeDecodeError:
+                    # If we couldn't open this file, just skip it.  It wasn't
+                    # going to be valid python anyway.
+                    continue
 
                 if "# pylint: skip-file\n" in lines:
                     continue
