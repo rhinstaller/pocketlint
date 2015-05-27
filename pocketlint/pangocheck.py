@@ -28,7 +28,7 @@ markup_nodes = ["markup", "a", "b", "big", "i", "s", "span", "sub", "sup", "smal
 
 # Check to see if a string looks like Pango markup, no validation
 def is_markup(test_string):
-    if type(test_string) == bytes:
+    if isinstance(test_string, bytes):
         test_string = test_string.decode("utf-8")
 
     return any(re.search(r'<\s*%s(\s|>)' % node_type, test_string)

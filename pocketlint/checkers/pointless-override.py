@@ -154,6 +154,8 @@ class PointlessAssignment(PointlessData):
 
     @classmethod
     def check_equal(cls, node, other):
+        # Allow the type() checks so that only an exact match will pass
+        # pylint: disable=unidiomatic-typecheck
         if type(node) != type(other):
             return False
         if isinstance(node, astroid.Const):
