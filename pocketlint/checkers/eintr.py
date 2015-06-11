@@ -27,14 +27,24 @@ from pylint.interfaces import IAstroidChecker
 
 import os
 
-# These are all of the system calls exposed through the os module that are
-# documented in SUSv4 as *may* set EINTR. Some of them probably don't in Linux,
-# but who knows.  lchmod, wait3 and wait4 aren't documented much anywhere but
-# are here just in case.
-interruptible = ("tmpfile", "close", "dup2", "fchmod", "fchown", "fstatvfs",
-                 "fsync", "ftruncate", "open", "read", "write", "fchdir",
-                 "chmod", "chown", "lchmod", "lchown", "statvfs", "wait",
-                 "waitpid", "wait3", "wait4")
+# These are most of the calls listed in PEP 0475 as being interruptible prior
+# to Python 3.5.  Ignore time.sleep, since it just returns early instead of
+# raising an exception.  For select.*.poll and select.kqueue.control, just hope
+# that anyone using them knows what they're getting into because the objects
+# returned by the select module cannot be inferred.
+interruptible = { "_io": ("open",),
+                  "io": ("open",),
+                  "faulthandler": ("dump_traceback", "enable", "disable", "is_enabled",
+                                   "dump_traceback_later", "cancel_dump_traceback_later",
+                                   "register", "unregister"),
+                  "os": ("fchdir", "fchmod", "fchown", "fdatasync", "fstat", "fstatvfs",
+                         "fsync", "ftruncate", "mkfifo", "mknod", "open", "posix_fadvise",
+                         "posix_fallocate", "pread", "pwrite", "read", "readv", "sendfile",
+                         "wait3", "wait4", "wait", "waitid", "waitpid", "write", "writev"),
+                  "select": ("select",),
+                  "socket": ("accept", "connect", "recv", "recvfrom", "recvmsg", "send",
+                             "sendall", "sendmsg", "sendto"),
+                  "signal": ("sigtimedwait", "sigwaitinfo") }
 
 class EintrChecker(BaseChecker):
     __implements__ = (IAstroidChecker,)
@@ -49,15 +59,19 @@ class EintrChecker(BaseChecker):
         if not isinstance(node, astroid.CallFunc):
             return
 
-        # Skip anything not a function or not in os.  os redirects most of its
-        # content to an OS-dependent module, named in os.name, so check that
-        # one too.
+        # Try to figure out the module. os redirects most of its
+        # content to an OS-dependent module, named os.name, so if the module
+        # is that, pretend it's os.
         function_node = safe_infer(node.func)
-        if not isinstance(function_node, astroid.Function) or \
-                function_node.root().name not in ("os", os.name):
+        if not isinstance(function_node, astroid.Function):
             return
 
-        if function_node.name in interruptible:
+        module_name = function_node.root().name
+        if module_name == os.name:
+            module_name = "os"
+
+        # Look for the function in the known interruptible functions
+        if module_name in interruptible and function_node.name in interruptible[module_name]:
             self.add_message("interruptible-system-call", node=node, args=function_node.name)
 
 def register(linter):
