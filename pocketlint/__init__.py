@@ -28,6 +28,8 @@ import subprocess
 import sys
 import tempfile
 
+from pocketlint.util import eintr_retry_call
+
 class PocketLintConfig(object):
     """Configuration object that a project should use to tell pylint how
        to operate.  Instance attributes:
@@ -140,7 +142,7 @@ class PocketLinter(object):
         for (root, _, files) in os.walk(srcdir):
             for f in files:
                 try:
-                    with open(root + "/" + f) as fo:
+                    with eintr_retry_call(open, root + "/" + f) as fo:
                         lines = fo.readlines()
                 except UnicodeDecodeError:
                     # If we couldn't open this file, just skip it.  It wasn't
@@ -288,7 +290,7 @@ class PocketLinter(object):
             files = self._files
 
         if self._pylint_log:
-            fo = open("pylint-log", "w")
+            fo = eintr_retry_call(open, "pylint-log", "w")
         else:
             fo = None
 
