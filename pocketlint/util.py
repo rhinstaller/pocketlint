@@ -16,15 +16,11 @@
 #
 # Author: Chris Lumens <clumens@redhat.com>
 
-import errno
-
 # Copied from python's subprocess.py
-def eintr_retry_call(func, *args):
+def eintr_retry_call(func, *args, **kwargs):
     """Retry an interruptible system call if interrupted."""
     while True:
         try:
-            return func(*args)
-        except (OSError, IOError) as e:
-            if e.errno == errno.EINTR:
-                continue
-            raise
+            return func(*args, **kwargs)
+        except InterruptedError:
+            continue
