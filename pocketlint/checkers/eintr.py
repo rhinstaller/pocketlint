@@ -46,15 +46,21 @@ interruptible = { "_io": ("open",),
                              "sendall", "sendmsg", "sendto"),
                   "signal": ("sigtimedwait", "sigwaitinfo") }
 
+# These two are slightly different, since they can raise EINTR but should not be retried
+ignorable = { "os": ("close", "dup2") }
+
 class EintrChecker(BaseChecker):
     __implements__ = (IAstroidChecker,)
     name = "retry-interruptible"
     msgs = {"W9930" : ("Found interruptible system call %s",
                        "interruptible-system-call",
                        "A system call that may raise EINTR is not wrapped in eintr_retry_call"),
+            "W9931" : ( "Found interruptible (ignore) system call %s",
+                        "ignorable-system-call",
+                        "A system call that may raise EINTR is not wrapped in eintr_ignore"),
            }
 
-    @check_messages("interruptible-system-call")
+    @check_messages("interruptible-system-call", "ignorable-system-call")
     def visit_callfunc(self, node):
         if not isinstance(node, astroid.CallFunc):
             return
@@ -73,6 +79,8 @@ class EintrChecker(BaseChecker):
         # Look for the function in the known interruptible functions
         if module_name in interruptible and function_node.name in interruptible[module_name]:
             self.add_message("interruptible-system-call", node=node, args=function_node.name)
+        elif module_name in ignorable and function_node.name in ignorable[module_name]:
+            self.add_message("ignorable-system-call", node=node, args=function_node.name)
 
 def register(linter):
     """required method to auto register this checker """
