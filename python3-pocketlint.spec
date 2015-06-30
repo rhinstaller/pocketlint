@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.5
+Version:   0.6
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,6 +39,13 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Tue Jun 30 2015 Chris Lumens <clumens@redhat.com> - 0.6-1
+- Add back checks for os.close and os.dup2 (dshea)
+- Add kwargs to eintr_retry_call (dshea)
+- open is an interruptable call, so wrap it with eintr_retry_call. (clumens)
+- Expand the EINTR checker to a bunch more functions (dshea)
+- Clean up some new pylint warnings about type vs. isinstance (bcl)
+
 * Mon Apr 27 2015 Chris Lumens <clumens@redhat.com> - 0.5-1
 - If we can't open a file to read, skip it. (clumens)
 
