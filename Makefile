@@ -38,8 +38,7 @@ local:
 	@echo "The archive is in $(PKGNAME)-$(VERSION).tar.gz"
 
 rpmlog:
-	@git log --pretty="format:- %s (%ae)" $(VERSION).. |sed -e 's/@.*)/)/'
-	@echo
+	@git log --pretty="format:- %s (%ae)" $(VERSION).. |sed -e 's/@.*)/)/' | grep -v "Merge pull request"
 
 bumpver:
 	@NEWSUBVER=$$((`echo $(VERSION) |cut -d . -f 2` + 1)) ; \
