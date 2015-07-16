@@ -51,4 +51,7 @@ bumpver:
 	sed -i "s/Version:   $(VERSION)/Version:   $$NEWVERSION/" python3-${PKGNAME}.spec ; \
 	sed -i "s/version='$(VERSION)'/version='$$NEWVERSION'/" setup.py
 
+ci:
+	PYTHONPATH=. tests/pylint/runpylint.py
+
 .PHONY: check clean install tag archive local
