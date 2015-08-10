@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.6
+Version:   0.7
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,6 +39,10 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Mon Aug 10 2015 Chris Lumens <clumens@redhat.com> - 0.7-1
+- Use sys.exit instead of os._exit. (clumens)
+- Add a new makefile target that does everything needed for jenkins. (clumens)
+
 * Tue Jun 30 2015 Chris Lumens <clumens@redhat.com> - 0.6-1
 - Add back checks for os.close and os.dup2 (dshea)
 - Add kwargs to eintr_retry_call (dshea)
