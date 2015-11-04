@@ -23,7 +23,6 @@
 # necessary.
 
 import os
-import locale
 import re
 
 from pocketlint.util import eintr_retry_call
@@ -65,11 +64,6 @@ class PODict(object):
 
 # Return a dictionary of PODict objects for each language in a po directory
 def translate_all(podir):
-    # Reset the locale to C before parsing the po file because
-    # polib has erroneous uses of lower()
-    saved_locale = locale.setlocale(locale.LC_ALL, None)
-    locale.setlocale(locale.LC_CTYPE, 'C')
-
     podicts = {}
 
     with eintr_retry_call(open, os.path.join(podir, 'LINGUAS')) as linguas:
@@ -80,5 +74,4 @@ def translate_all(podir):
             for lang in line.strip().split(" "):
                 podicts[lang] = PODict(os.path.join(podir, lang + ".po"))
 
-    locale.setlocale(locale.LC_CTYPE, saved_locale)
     return podicts
