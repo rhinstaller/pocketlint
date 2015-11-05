@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.8
+Version:   0.9
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,6 +39,9 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Thu Nov 05 2015 Chris Lumens <clumens@redhat.com> - 0.9-1
+- Don't modify the locale to load translations. (dshea)
+
 * Mon Oct 19 2015 Chris Lumens <clumens@redhat.com> - 0.8-1
 - Don't bomb out on non-utf8 byte strings (dshea)
 
