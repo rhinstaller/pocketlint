@@ -30,8 +30,7 @@ import os
 
 import xml.etree.ElementTree as ET
 
-# markup_necessary not used yet
-from pocketlint.pangocheck import markup_nodes, is_markup, markup_match #, markup_necessary
+from pocketlint.pangocheck import markup_nodes, is_markup, markup_match
 
 markupMethods = ["set_markup"]
 escapeMethods = ["escape_markup"]
@@ -63,9 +62,6 @@ class MarkupChecker(BaseChecker):
             "W9925" : ("Found mis-translated pango markup for language %s",
                        "invalid-pango-translation",
                        "The elements or attributes do not match between a pango markup string and its translation"),
-            "W9926" : ("Found unnecessary pango markup",
-                       "unnecessary-markup",
-                       "Pango markup could be expressed as attribute list"),
            }
 
     options = (('translate-markup',
@@ -91,12 +87,6 @@ class MarkupChecker(BaseChecker):
             # QUIS CUSTODIET IPSOS CUSTODES
             # pylint: disable=unescaped-markup
             tree = ET.fromstring("<markup>%s</markup>" % string)
-
-            # Check if the markup is necessary
-            # TODO: Turn this on after it's possible to actually do
-            # anything about it. See https://bugzilla.gnome.org/show_bug.cgi?id=725681
-            #if not markup_necessary(tree):
-            #    self.add_message("W9926", node=node)
         except ET.ParseError:
             if lang:
                 self.add_message("W9923", node=node, args=(lang,))
