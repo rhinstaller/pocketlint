@@ -61,7 +61,7 @@ class EintrChecker(BaseChecker):
            }
 
     @check_messages("interruptible-system-call", "ignorable-system-call")
-    def visit_callfunc(self, node):
+    def visit_call(self, node):
         if not isinstance(node, astroid.CallFunc):
             return
 
