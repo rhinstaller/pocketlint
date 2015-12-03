@@ -94,6 +94,15 @@ class PocketLintConfig(object):
                  "pocketlint.checkers.preconf",
                ]
 
+    @property
+    def ignoreNames(self):
+        """A set of names to skip when automatically determining the list of
+           files to lint. The items in this set could be a particular filename
+           to skip or a directory that the linter should not traverse into.
+           The items should be just basenames, not paths.
+        """
+        return set()
+
 class FalsePositive(object):
     """An object used in filtering out incorrect results from pylint.  Pass in
        a regular expression matching a pylint error message that should be
@@ -139,7 +148,14 @@ class PocketLinter(object):
 
         srcdir = os.environ.get("top_srcdir", os.getcwd())
 
-        for (root, _, files) in os.walk(srcdir):
+        for (root, dirnames, files) in os.walk(srcdir):
+            # Filter out the names to ignore
+            for i in self._config.ignoreNames:
+                if i in dirnames:
+                    dirnames.remove(i)
+                if i in files:
+                    files.remove(i)
+
             for f in files:
                 try:
                     with eintr_retry_call(open, root + "/" + f) as fo:
