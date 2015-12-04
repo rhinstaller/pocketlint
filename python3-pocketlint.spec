@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.9
+Version:   0.10
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,6 +39,11 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Fri Dec 04 2015 Chris Lumens <clumens@redhat.com> - 0.10-1
+- Add a config property to ignore paths. (dshea)
+- Remove the translated markup checks (dshea)
+- Remove the commented-out markup_necessary check. (dshea)
+
 * Thu Nov 05 2015 Chris Lumens <clumens@redhat.com> - 0.9-1
 - Don't modify the locale to load translations. (dshea)
 
