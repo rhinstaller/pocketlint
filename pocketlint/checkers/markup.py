@@ -25,18 +25,12 @@ from pylint.checkers import BaseChecker
 from pylint.checkers.utils import check_messages
 from pylint.interfaces import IAstroidChecker
 
-import sys
-import os
-
 import xml.etree.ElementTree as ET
 
-from pocketlint.pangocheck import markup_nodes, is_markup, markup_match
+from pocketlint.pangocheck import markup_nodes, is_markup
 
 markupMethods = ["set_markup"]
 escapeMethods = ["escape_markup"]
-
-# Used for checking translations
-podicts = None
 
 i18n_funcs = ["_", "N_", "P_", "C_", "CN_", "CP_"]
 i18n_ctxt_funcs = ["C_", "CN_", "CP_"]
@@ -53,45 +47,24 @@ class MarkupChecker(BaseChecker):
             "W9922" : ("Found % in markup with unescaped parameters",
                        "unescaped-markup",
                        "Parameters passed to % in markup not escaped"),
-            "W9923" : ("Found invalid pango markup in %s translation",
-                       "invalid-translated-markup",
-                       "Translated Pango markup could not be parsed"),
-            "W9924" : ("Found pango markup with invalid element %s in %s translation",
-                       "invalid-translated-markup-element",
-                       "Translated pango markup contains invalid elements"),
-            "W9925" : ("Found mis-translated pango markup for language %s",
-                       "invalid-pango-translation",
-                       "The elements or attributes do not match between a pango markup string and its translation"),
            }
 
-    options = (('translate-markup',
-                {'default': False, 'type' : 'yn', 'metavar' : '<y_or_n>',
-                 'help' : "Check translations of markup strings"
-                }),
-              )
-
     # Check a parsed markup string for invalid tags
-    def _validate_pango_markup(self, node, root, lang=None):
+    def _validate_pango_markup(self, node, root):
         if root.tag not in markup_nodes:
-            if lang:
-                self.add_message("W9924", node=node, args=(root.tag, lang))
-            else:
-                self.add_message("W9921", node=node, args=(root.tag,))
+            self.add_message("W9921", node=node, args=(root.tag,))
         else:
             for child in root:
                 self._validate_pango_markup(node, child)
 
     # Attempt to parse a markup string as XML
-    def _validate_pango_markup_string(self, node, string, lang=None):
+    def _validate_pango_markup_string(self, node, string):
         try:
             # QUIS CUSTODIET IPSOS CUSTODES
             # pylint: disable=unescaped-markup
             tree = ET.fromstring("<markup>%s</markup>" % string)
         except ET.ParseError:
-            if lang:
-                self.add_message("W9923", node=node, args=(lang,))
-            else:
-                self.add_message("W9920", node=node)
+            self.add_message("W9920", node=node)
         else:
             # Check that all of the elements are valid for pango
             self._validate_pango_markup(node, tree)
@@ -99,7 +72,7 @@ class MarkupChecker(BaseChecker):
     def __init__(self, linter=None):
         BaseChecker.__init__(self, linter)
 
-    @check_messages("invalid-markup", "invalid-markup-element", "unescaped-markup", "invalid-translated-markup", "invalid-translated-markup-element", "invalid-pango-translation", "unnecessary-markup")
+    @check_messages("invalid-markup", "invalid-markup-element", "unescaped-markup", "unnecessary-markup")
     def visit_const(self, node):
         if not isinstance(node.value, (str, bytes)):
             return
@@ -108,50 +81,6 @@ class MarkupChecker(BaseChecker):
             return
 
         self._validate_pango_markup_string(node, node.value)
-
-        # Check translated versions of the string if requested
-        if self.config.translate_markup:
-            global podicts
-
-            # Check if this is a translatable string
-            curr = node
-            i18nFunc = None
-            while curr.parent:
-                if isinstance(curr.parent, astroid.CallFunc) and \
-                        getattr(curr.parent.func, "name", "") in i18n_funcs:
-                    i18nFunc = curr.parent
-                    break
-                curr = curr.parent
-
-            if i18nFunc:
-                # If not done already, import polib and read the translations
-                if not podicts:
-                    try:
-                        from pocketlint.translatepo import translate_all
-                    except ImportError:
-                        print("Unable to load po translation module")
-                        sys.exit(99)
-                    else:
-                        podicts = translate_all(os.path.join(os.environ.get('top_srcdir', '.'), 'po'))
-
-                if i18nFunc.func.name in i18n_ctxt_funcs:
-                    msgctxt = i18nFunc.args[0].value
-                else:
-                    msgctxt = None
-
-                # Loop over all translations for the string
-                for podict in podicts.values():
-                    try:
-                        node_values = podict.get(node.value, msgctxt)
-                    except KeyError:
-                        continue
-
-                    for value in node_values:
-                        self._validate_pango_markup_string(node, value, podict.metadata['Language'])
-
-                        # Check that the markup matches, roughly
-                        if not markup_match(node.value, value):
-                            self.add_message("W9925", node=node, args=(podict.metadata['Language'],))
 
         # Check if this the left side of a % operation
         curr = node
