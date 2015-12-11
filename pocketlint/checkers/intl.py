@@ -79,7 +79,7 @@ class IntlChecker(BaseChecker):
             curr = curr.parent
 
     @check_messages("found-_-in-module-class")
-    def visit_callfunc(self, node):
+    def visit_call(self, node):
         # The first test skips internal functions like getattr.
         if isinstance(node.func, astroid.Name) and node.func.name == "_":
             if isinstance(node.scope(), astroid.Module) or isinstance(node.scope(), astroid.Class):
@@ -99,7 +99,7 @@ class IntlLoggingChecker(LoggingChecker):
     options = ()
 
     @check_messages('translated-log')
-    def visit_callfunc(self, node):
+    def visit_call(self, node):
         if len(node.args) >= 1 and isinstance(node.args[0], astroid.CallFunc) and \
                 getattr(node.args[0].func, "name", "") in translationMethods:
             for formatstr in _get_message_strings(node.args[0]):
@@ -109,7 +109,7 @@ class IntlLoggingChecker(LoggingChecker):
                 copyargs = copy(node.args)
                 copyargs[0] = astroid.Const(formatstr)
                 copynode.args = copyargs
-                LoggingChecker.visit_callfunc(self, copynode)
+                LoggingChecker.visit_call(self, copynode)
 
     def __init__(self, *args, **kwargs):
         LoggingChecker.__init__(self, *args, **kwargs)

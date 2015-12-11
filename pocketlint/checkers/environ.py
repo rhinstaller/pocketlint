@@ -64,7 +64,7 @@ class EnvironChecker(BaseChecker):
                 self.add_message("environment-modify", node=node)
 
     @check_messages("environment-modify")
-    def visit_callfunc(self, node):
+    def visit_call(self, node):
         # Check both for uses of os.putenv and os.setenv and modifying calls
         # to the os.environ object, such as os.environ.update
 
