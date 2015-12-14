@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.10
+Version:   0.11
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,6 +39,9 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Mon Dec 14 2015 Chris Lumens <clumens@redhat.com> - 0.11-1
+- pylint changed visit_callfunc to visit_call (bcl)
+
 * Fri Dec 04 2015 Chris Lumens <clumens@redhat.com> - 0.10-1
 - Add a config property to ignore paths. (dshea)
 - Remove the translated markup checks (dshea)
