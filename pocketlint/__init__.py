@@ -57,6 +57,7 @@ class PocketLintConfig(object):
                  "W0603",           # Using the global statement
                  "W0613",           # Unused argument %r
                  "W0614",           # Unused import %s from wildcard import
+                 "E0012",           # Bad inline option given to pylint
                  "E1103",           # %s %r has no %r member (but some types could not be inferred)
                  "I0011",           # Locally disabling %s
                  "I0012",           # Locally enabling %s
