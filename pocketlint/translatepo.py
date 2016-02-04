@@ -25,8 +25,6 @@
 import os
 import re
 
-from pocketlint.util import eintr_retry_call
-
 try:
     import polib
 except ImportError:
@@ -66,7 +64,7 @@ class PODict(object):
 def translate_all(podir):
     podicts = {}
 
-    with eintr_retry_call(open, os.path.join(podir, 'LINGUAS')) as linguas:
+    with open(os.path.join(podir, 'LINGUAS')) as linguas:
         for line in linguas.readlines():
             if re.match(r'^#', line):
                 continue
