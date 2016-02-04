@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.11
+Version:   0.12
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,6 +39,10 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Thu Feb 04 2016 Chris Lumens <clumens@redhat.com> - 0.12-1
+- Remove the checks for interruptible system calls. (dshea)
+- Ignore E0012 messages. (clumens)
+
 * Mon Dec 14 2015 Chris Lumens <clumens@redhat.com> - 0.11-1
 - pylint changed visit_callfunc to visit_call (bcl)
 
