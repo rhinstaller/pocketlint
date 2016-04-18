@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.12
+Version:   0.13
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,6 +39,9 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Mon Apr 18 2016 Chris Lumens <clumens@redhat.com> - 0.13-1
+- E1103 is hiding common errors (#13) (bcl)
+
 * Thu Feb 04 2016 Chris Lumens <clumens@redhat.com> - 0.12-1
 - Remove the checks for interruptible system calls. (dshea)
 - Ignore E0012 messages. (clumens)
