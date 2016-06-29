@@ -276,7 +276,11 @@ class PocketLinter(object):
         return retval
 
     def _run_one(self, filename, args):
-        proc = subprocess.Popen(["python3-pylint"] + self._pylint_args + args + [filename],
+        pylint_exe = "/usr/bin/python3-pylint"
+        # in case we've installed pylint from pip, not rpm
+        if not os.path.exists(pylint_exe):
+            pylint_exe="pylint"
+        proc = subprocess.Popen([pylint_exe] + self._pylint_args + args + [filename],
                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdout, stderr) = proc.communicate()
         output = stdout + stderr
