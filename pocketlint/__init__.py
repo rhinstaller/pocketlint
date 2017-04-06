@@ -276,10 +276,12 @@ class PocketLinter(object):
         return retval
 
     def _run_one(self, filename, args):
-        pylint_exe = "/usr/bin/python3-pylint"
-        # in case we've installed pylint from pip, not rpm
-        if not os.path.exists(pylint_exe):
-            pylint_exe="pylint"
+        # pylint-3 for newer rpm versions
+        # python3-pylint for older version of rpm (before F26)
+        # pylint when installed from pip, not rpm
+        pylint_paths = ("/usr/bin/pylint-3", "/usr/bin/python3-pylint", "pylint")
+        pylint_exe = next((i for i in pylint_paths if os.path.exists(i)), None)
+
         proc = subprocess.Popen([pylint_exe] + self._pylint_args + args + [filename],
                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdout, stderr) = proc.communicate()
