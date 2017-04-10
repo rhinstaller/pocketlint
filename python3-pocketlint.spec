@@ -1,5 +1,5 @@
 Name:      python3-pocketlint
-Version:   0.13
+Version:   0.14
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -39,6 +39,10 @@ make check
 %{python3_sitelib}/pocketlint/
 
 %changelog
+* Mon Apr 10 2017 Chris Lumens <clumens@redhat.com> - 0.14-1
+- Fix pylint name for Fedora 26 and later (#15) (jkonecny)
+- Fallback to using pylint in case we didn't install from RPM (#14) (atodorov)
+
 * Mon Apr 18 2016 Chris Lumens <clumens@redhat.com> - 0.13-1
 - E1103 is hiding common errors (#13) (bcl)
 
