@@ -28,6 +28,8 @@ import subprocess
 import sys
 import tempfile
 
+from distutils.version import LooseVersion
+
 class PocketLintConfig(object):
     """Configuration object that a project should use to tell pylint how
        to operate.  Instance attributes:
@@ -192,7 +194,38 @@ class PocketLinter(object):
         if self._config.extraArgs:
             args += self._config.extraArgs
 
+        # since 1.7 pylint by default prints "score", we need to disable it
+        if self._pylint_version >= LooseVersion("1.7.0"):
+            args += ["-s", "n"]
+
         return args
+
+    def _command_exists(self, exc):
+        proc = subprocess.Popen(["which", exc],
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        _out, _err = proc.communicate()
+        return proc.returncode == 0
+
+    @property
+    def _pylint_executable(self):
+        # pylint-3 for newer rpm versions
+        # python3-pylint for older version of rpm (before F26)
+        # pylint when installed from pip, not rpm
+        pylint_paths = ("pylint-3", "python3-pylint", "pylint")
+        return next((i for i in pylint_paths if self._command_exists(i)), None)
+
+    @property
+    def _pylint_version(self):
+        exc = self._pylint_executable
+        proc = subprocess.Popen([exc, "--version"],
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        (stdout, _stderr) = proc.communicate()
+        pattern = re.compile(r"%s (?P<version>[1-9.]+)" % exc)
+        match = pattern.search(stdout.decode())
+        if match:
+            return LooseVersion(match.group("version"))
+        else:
+            return LooseVersion("0")
 
     def _parseArgs(self):
         # Really stupid argument processing - strip off the first argument (that's
@@ -276,13 +309,7 @@ class PocketLinter(object):
         return retval
 
     def _run_one(self, filename, args):
-        # pylint-3 for newer rpm versions
-        # python3-pylint for older version of rpm (before F26)
-        # pylint when installed from pip, not rpm
-        pylint_paths = ("/usr/bin/pylint-3", "/usr/bin/python3-pylint", "pylint")
-        pylint_exe = next((i for i in pylint_paths if os.path.exists(i)), None)
-
-        proc = subprocess.Popen([pylint_exe] + self._pylint_args + args + [filename],
+        proc = subprocess.Popen([self._pylint_executable] + self._pylint_args + args + [filename],
                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdout, stderr) = proc.communicate()
         output = stdout + stderr
