@@ -19,11 +19,14 @@
 # Red Hat Author(s): Chris Lumens <clumens@redhat.com>
 #
 
+from __future__ import print_function
+
 import atexit
 import concurrent.futures
 import os
 import re
 import shutil
+import six
 import subprocess
 import sys
 import tempfile
@@ -208,11 +211,16 @@ class PocketLinter(object):
 
     @property
     def _pylint_executable(self):
-        # pylint-3 for newer rpm versions
-        # python3-pylint for older version of rpm (before F26)
+        # pylint-3/pylint-2 for newer rpm versions
+        # python3-pylint/python2-pylint for older version of rpm (before F26)
+        # python-pylint for python2 version on RHEL/CentOS 7
         # pylint when installed from pip, not rpm
-        pylint_paths = ("pylint-3", "python3-pylint", "pylint")
-        return next((i for i in pylint_paths if self._command_exists(i)), None)
+        if six.PY3:
+            pylint_binaries = ("pylint-3", "python3-pylint", "pylint")
+        else:
+            pylint_binaries = ("pylint-2", "python2-pylint", "python-pylint",
+                               "pylint")
+        return next((i for i in pylint_binaries if self._command_exists(i)), None)
 
     @property
     def _pylint_version(self):
@@ -321,9 +329,11 @@ class PocketLinter(object):
         return ("", 0)
 
     def _print(self, s, fo=None):
-        print(s, flush=True)
+        print(s)
+        sys.stdout.flush()
         if fo:
-            print(s, flush=True, file=fo)
+            print(s, file=fo)
+            fo.flush()
 
     def run(self):
         retval = 0
