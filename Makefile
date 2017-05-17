@@ -1,5 +1,5 @@
 PKGNAME=pocketlint
-VERSION=$(shell awk '/Version:/ { print $$2 }' python3-$(PKGNAME).spec)
+VERSION=$(shell awk '/Version:/ { print $$2 }' python-$(PKGNAME).spec)
 
 PREFIX=/usr
 
@@ -10,7 +10,7 @@ build:
 
 check:
 	@echo "*** Running pylint to verify source ***"
-	PYTHONPATH=./build/lib tests/pylint/runpylint.py
+	PYTHONPATH=./build/lib $(PYTHON) tests/pylint/runpylint.py
 
 clean:
 	-rm pylint-log
@@ -44,11 +44,11 @@ bumpver:
 	@NEWSUBVER=$$((`echo $(VERSION) |cut -d . -f 2` + 1)) ; \
 	NEWVERSION=`echo $(VERSION).$$NEWSUBVER |cut -d . -f 1,3` ; \
 	DATELINE="* `date "+%a %b %d %Y"` `git config user.name` <`git config user.email`> - $$NEWVERSION-1"  ; \
-	cl=`grep -n %changelog python3-${PKGNAME}.spec |cut -d : -f 1` ; \
-	tail --lines=+$$(($$cl + 1)) python3-${PKGNAME}.spec > speclog ; \
-	(head -n $$cl python3-${PKGNAME}.spec ; echo "$$DATELINE" ; make --quiet rpmlog 2>/dev/null ; echo ""; cat speclog) > python3-${PKGNAME}.spec.new ; \
-	mv python3-${PKGNAME}.spec.new python3-${PKGNAME}.spec ; rm -f speclog ; \
-	sed -i "s/Version:   $(VERSION)/Version:   $$NEWVERSION/" python3-${PKGNAME}.spec ; \
+	cl=`grep -n %changelog python-${PKGNAME}.spec |cut -d : -f 1` ; \
+	tail --lines=+$$(($$cl + 1)) python-${PKGNAME}.spec > speclog ; \
+	(head -n $$cl python-${PKGNAME}.spec ; echo "$$DATELINE" ; make --quiet rpmlog 2>/dev/null ; echo ""; cat speclog) > python-${PKGNAME}.spec.new ; \
+	mv python-${PKGNAME}.spec.new python-${PKGNAME}.spec ; rm -f speclog ; \
+	sed -i "s/Version:   $(VERSION)/Version:   $$NEWVERSION/" python-${PKGNAME}.spec ; \
 	sed -i "s/version='$(VERSION)'/version='$$NEWVERSION'/" setup.py
 
 ci:

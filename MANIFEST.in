@@ -1,2 +1,2 @@
-include COPYING Makefile python3-pocketlint.spec
+include COPYING Makefile python-pocketlint.spec
 recursive-include tests *.py
