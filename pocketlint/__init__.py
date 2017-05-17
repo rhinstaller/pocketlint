@@ -19,6 +19,8 @@
 # Red Hat Author(s): Chris Lumens <clumens@redhat.com>
 #
 
+from __future__ import print_function
+
 import atexit
 import concurrent.futures
 import os
@@ -294,9 +296,11 @@ class PocketLinter(object):
         return ("", 0)
 
     def _print(self, s, fo=None):
-        print(s, flush=True)
+        print(s)
+        sys.stdout.flush()
         if fo:
-            print(s, flush=True, file=fo)
+            print(s, file=fo)
+            fo.flush()
 
     def run(self):
         retval = 0
