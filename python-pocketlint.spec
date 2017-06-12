@@ -1,5 +1,5 @@
 Name:      python-pocketlint
-Version:   0.14
+Version:   0.15
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -83,6 +83,11 @@ make PYTHON=%{__python3} check
 %{python2_sitelib}/pocketlint/
 
 %changelog
+* Mon Jun 12 2017 Vojtech Trefny <vtrefny@redhat.com> - 0.15-1
+- Add python2-pylint subpackage (vtrefny)
+- Make pocketlint python2 compatible (vtrefny)
+- Disable printing of score when running pylint (vtrefny)
+
 * Mon Apr 10 2017 Chris Lumens <clumens@redhat.com> - 0.14-1
 - Fix pylint name for Fedora 26 and later (#15) (jkonecny)
 - Fallback to using pylint in case we didn't install from RPM (#14) (atodorov)
