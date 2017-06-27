@@ -34,8 +34,8 @@ Summary: Support for running pylint against projects (Python 2 version)
 %{?python_provide:%python_provide python2-pocketlint}
 
 BuildRequires: python2-devel
-BuildRequires: python-six
-BuildRequires: python-futures
+BuildRequires: python2-six
+BuildRequires: python2-futures
 
 %if 0%{?fedora} >= 26
 BuildRequires: python2-pylint
@@ -43,9 +43,9 @@ BuildRequires: python2-pylint
 BuildRequires: pylint
 %endif
 
-Requires: python-polib
-Requires: python-six
-Requires: python-futures
+Requires: python2-polib
+Requires: python2-six
+Requires: python2-futures
 
 %if 0%{?fedora} >= 26
 Requires: python2-pylint
