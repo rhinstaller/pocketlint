@@ -215,8 +215,9 @@ class PocketLinter(object):
         # python3-pylint/python2-pylint for older version of rpm (before F26)
         # python-pylint for python2 version on RHEL/CentOS 7
         # pylint when installed from pip, not rpm
+        # pylint3 on Debian
         if six.PY3:
-            pylint_binaries = ("pylint-3", "python3-pylint", "pylint")
+            pylint_binaries = ("pylint-3", "python3-pylint", "pylint3", "pylint")
         else:
             pylint_binaries = ("pylint-2", "python2-pylint", "python-pylint",
                                "pylint")
