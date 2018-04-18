@@ -1,11 +1,13 @@
-Name:      python-pocketlint
+%global srcname pocketlint
+
+Name:      python-%{srcname}
 Version:   0.15
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
 License:   GPLv2+
-Url:       https://github.com/rhinstaller/pocketlint
-Source0:   https://github.com/rhinstaller/pocketlint/archive/%{version}/pocketlint-%{version}.tar.gz
+Url:       https://github.com/rhinstaller/%{srcname}
+Source0:   https://github.com/rhinstaller/%{srcname}/archive/%{version}/%{srcname}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -13,9 +15,9 @@ BuildArch: noarch
 Addon pylint modules and configuration settings for checking the validity of
 Python-based source projects.
 
-%package -n python3-pocketlint
+%package -n python3-%{srcname}
 Summary: Support for running pylint against projects (Python 3 version)
-%{?python_provide:%python_provide python3-pocketlint}
+%{?python_provide:%python_provide python3-%{srcname}}
 
 BuildRequires: python3-devel
 BuildRequires: python3-pylint
@@ -25,17 +27,17 @@ Requires: python3-polib
 Requires: python3-pylint
 Requires: python3-six
 
-%description -n python3-pocketlint
+%description -n python3-%{srcname}
 Addon pylint modules and configuration settings for checking the validity of
 Python-based source projects.
 
-%package -n python2-pocketlint
+%package -n python2-%{srcname}
 Summary: Support for running pylint against projects (Python 2 version)
-%{?python_provide:%python_provide python2-pocketlint}
+%{?python_provide:%python_provide python2-%{srcname}}
 
 BuildRequires: python2-devel
-BuildRequires: python-six
-BuildRequires: python-futures
+BuildRequires: python2-six
+BuildRequires: python2-futures
 
 %if 0%{?fedora} >= 26
 BuildRequires: python2-pylint
@@ -43,9 +45,9 @@ BuildRequires: python2-pylint
 BuildRequires: pylint
 %endif
 
-Requires: python-polib
-Requires: python-six
-Requires: python-futures
+Requires: python2-polib
+Requires: python2-six
+Requires: python2-futures
 
 %if 0%{?fedora} >= 26
 Requires: python2-pylint
@@ -53,12 +55,12 @@ Requires: python2-pylint
 Requires: pylint
 %endif
 
-%description -n python2-pocketlint
+%description -n python2-%{srcname}
 Addon pylint modules and configuration settings for checking the validity of
 Python-based source projects.
 
 %prep
-%setup -q -n pocketlint-%{version}
+%setup -q -n %{srcname}-%{version}
 
 %build
 make PYTHON=%{__python2}
@@ -72,15 +74,15 @@ make DESTDIR=%{buildroot} PYTHON=%{__python3} install
 make PYTHON=%{__python2} check
 make PYTHON=%{__python3} check
 
-%files -n python3-pocketlint
+%files -n python3-%{srcname}
 %license COPYING
-%{python3_sitelib}/pocketlint*egg*
-%{python3_sitelib}/pocketlint/
+%{python3_sitelib}/%{srcname}*egg*
+%{python3_sitelib}/%{srcname}/
 
-%files -n python2-pocketlint
+%files -n python2-%{srcname}
 %license COPYING
-%{python2_sitelib}/pocketlint*egg*
-%{python2_sitelib}/pocketlint/
+%{python2_sitelib}/%{srcname}*egg*
+%{python2_sitelib}/%{srcname}/
 
 %changelog
 * Mon Jun 12 2017 Vojtech Trefny <vtrefny@redhat.com> - 0.15-1
