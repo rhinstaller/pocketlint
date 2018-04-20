@@ -1,5 +1,18 @@
 %global srcname pocketlint
 
+# python2 is not available on RHEL > 7 and not needed on Fedora > 28
+%if 0%{?rhel} > 7 || 0%{?fedora} > 28
+%bcond_with python2
+%else
+%bcond_without python2
+%endif
+
+%if 0%{?fedora} || 0%{?rhel} > 7
+%bcond_without python3
+%else
+%bcond_with python3
+%endif
+
 Name:      python-%{srcname}
 Version:   0.15
 Release:   1%{?dist}
@@ -15,6 +28,7 @@ BuildArch: noarch
 Addon pylint modules and configuration settings for checking the validity of
 Python-based source projects.
 
+%if %{with python3}
 %package -n python3-%{srcname}
 Summary: Support for running pylint against projects (Python 3 version)
 %{?python_provide:%python_provide python3-%{srcname}}
@@ -30,7 +44,9 @@ Requires: python3-six
 %description -n python3-%{srcname}
 Addon pylint modules and configuration settings for checking the validity of
 Python-based source projects.
+%endif
 
+%if %{with python2}
 %package -n python2-%{srcname}
 Summary: Support for running pylint against projects (Python 2 version)
 %{?python_provide:%python_provide python2-%{srcname}}
@@ -58,31 +74,48 @@ Requires: pylint
 %description -n python2-%{srcname}
 Addon pylint modules and configuration settings for checking the validity of
 Python-based source projects.
+%endif
 
 %prep
 %setup -q -n %{srcname}-%{version}
 
 %build
+%if %{with python2}
 make PYTHON=%{__python2}
+%endif
+%if %{with python3}
 make PYTHON=%{__python3}
+%endif
 
 %install
+%if %{with python2}
 make DESTDIR=%{buildroot} PYTHON=%{__python2} install
+%endif
+%if %{with python3}
 make DESTDIR=%{buildroot} PYTHON=%{__python3} install
+%endif
 
 %check
+%if %{with python2}
 make PYTHON=%{__python2} check
+%endif
+%if %{with python3}
 make PYTHON=%{__python3} check
+%endif
 
+%if %{with python3}
 %files -n python3-%{srcname}
 %license COPYING
 %{python3_sitelib}/%{srcname}*egg*
 %{python3_sitelib}/%{srcname}/
+%endif
 
+%if %{with python2}
 %files -n python2-%{srcname}
 %license COPYING
 %{python2_sitelib}/%{srcname}*egg*
 %{python2_sitelib}/%{srcname}/
+%endif
 
 %changelog
 * Mon Jun 12 2017 Vojtech Trefny <vtrefny@redhat.com> - 0.15-1
