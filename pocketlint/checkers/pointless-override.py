@@ -114,7 +114,7 @@ class PointlessData(object):
 class PointlessFunctionDefinition(PointlessData):
     """ Looking for pointless function definitions. """
 
-    _DEF_CLASS = astroid.Function
+    _DEF_CLASS = astroid.FunctionDef
     message_id = "W9952"
 
     @classmethod
@@ -141,7 +141,7 @@ class PointlessAssignment(PointlessData):
     message_id = "W9951"
 
     _VALUE_CLASSES = (
-        astroid.CallFunc,
+        astroid.Call,
         astroid.Const,
         astroid.Dict,
         astroid.List,
@@ -166,7 +166,7 @@ class PointlessAssignment(PointlessData):
         if isinstance(node, astroid.Dict):
             return len(node.items) == len(other.items) and \
                all(cls.check_equal(n, o) for (n, o) in zip(sorted(node.items), sorted(other.items)))
-        if isinstance(node, astroid.CallFunc):
+        if isinstance(node, astroid.Call):
             if type(node.func) != type(other.func):
                 return False
 

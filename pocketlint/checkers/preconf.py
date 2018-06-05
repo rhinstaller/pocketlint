@@ -36,7 +36,7 @@ class PreconfChecker(BaseChecker):
     @check_messages("bad-preconf-access")
     def visit_getattr(self, node):
         if node.attrname == "preconf":
-            if not isinstance(node.scope(), astroid.Function) or not node.scope().name == "_resetYum":
+            if not isinstance(node.scope(), astroid.FunctionDef) or not node.scope().name == "_resetYum":
                 self.add_message("W9910", node=node)
 
 def register(linter):

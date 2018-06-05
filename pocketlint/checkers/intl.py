@@ -72,7 +72,7 @@ class IntlChecker(BaseChecker):
 
         curr = node
         while curr.parent:
-            if isinstance(curr.parent, astroid.CallFunc) and getattr(curr.parent.func, "name", "") in translationMethods:
+            if isinstance(curr.parent, astroid.Call) and getattr(curr.parent.func, "name", "") in translationMethods:
                 self.add_message("W9901", node=node)
                 break
 
@@ -100,7 +100,7 @@ class IntlLoggingChecker(LoggingChecker):
 
     @check_messages('translated-log')
     def visit_call(self, node):
-        if len(node.args) >= 1 and isinstance(node.args[0], astroid.CallFunc) and \
+        if len(node.args) >= 1 and isinstance(node.args[0], astroid.Call) and \
                 getattr(node.args[0].func, "name", "") in translationMethods:
             for formatstr in _get_message_strings(node.args[0]):
                 # Both the node and the args need to be copied so we don't replace args
@@ -134,7 +134,7 @@ class IntlStringFormatChecker(StringFormatChecker):
         if node.op != '%':
             return
 
-        if isinstance(node.left, astroid.CallFunc) and getattr(node.left.func, "name", "") in translationMethods:
+        if isinstance(node.left, astroid.Call) and getattr(node.left.func, "name", "") in translationMethods:
             for formatstr in _get_message_strings(node.left):
                 # Create a copy of the node with just the message string as the format
                 copynode = copy(node)
