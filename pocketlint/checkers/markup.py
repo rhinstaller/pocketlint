@@ -94,19 +94,19 @@ class MarkupChecker(BaseChecker):
 
         # Check whether the right side of the % operation is escaped
         if formatOp:
-            if isinstance(formatOp.right, astroid.CallFunc):
+            if isinstance(formatOp.right, astroid.Call):
                 if getattr(formatOp.right.func, "name", "") not in escapeMethods:
                     self.add_message("W9922", node=formatOp.right)
             # If a tuple, each item in the tuple must be escaped
             elif isinstance(formatOp.right, astroid.Tuple):
                 for elt in formatOp.right.elts:
-                    if not isinstance(elt, astroid.CallFunc) or\
+                    if not isinstance(elt, astroid.Call) or\
                             getattr(elt.func, "name", "") not in escapeMethods:
                         self.add_message("W9922", node=elt)
             # If a dictionary, each value must be escaped
             elif isinstance(formatOp.right, astroid.Dict):
                 for item in formatOp.right.items:
-                    if not isinstance(item[1], astroid.CallFunc) or\
+                    if not isinstance(item[1], astroid.Call) or\
                             getattr(item[1].func, "name", "") not in escapeMethods:
                         self.add_message("W9922", node=item[1])
             else:

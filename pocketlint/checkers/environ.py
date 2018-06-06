@@ -68,11 +68,11 @@ class EnvironChecker(BaseChecker):
         # Check both for uses of os.putenv and os.setenv and modifying calls
         # to the os.environ object, such as os.environ.update
 
-        if not isinstance(node, astroid.CallFunc):
+        if not isinstance(node, astroid.Call):
             return
 
         function_node = safe_infer(node.func)
-        if not isinstance(function_node, (astroid.Function, astroid.BoundMethod)):
+        if not isinstance(function_node, (astroid.FunctionDef, astroid.BoundMethod)):
             return
 
         # If the function is from the os or posix modules, look for calls that
