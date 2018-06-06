@@ -170,7 +170,7 @@ class PointlessAssignment(PointlessData):
             if type(node.func) != type(other.func):
                 return False
 
-            if isinstance(node.func, astroid.Getattr):
+            if isinstance(node.func, astroid.Attribute):
                 if node.func.attrname != other.func.attrname or \
                    type(node.func.expr) != type(other.func.expr) or \
                    node.func.expr.name != other.func.expr.name:

@@ -37,7 +37,7 @@ class EnvironChecker(BaseChecker):
     def _is_environ(self, node):
         # Guess whether a node being modified is os.environ
 
-        if isinstance(node, astroid.Getattr):
+        if isinstance(node, astroid.Attribute):
             if node.attrname == "environ":
                 expr_node = safe_infer(node.expr)
                 if isinstance(expr_node, astroid.Module) and expr_node.name == "os":
