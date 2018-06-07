@@ -82,7 +82,7 @@ class IntlChecker(BaseChecker):
     def visit_call(self, node):
         # The first test skips internal functions like getattr.
         if isinstance(node.func, astroid.Name) and node.func.name == "_":
-            if isinstance(node.scope(), astroid.Module) or isinstance(node.scope(), astroid.Class):
+            if isinstance(node.scope(), astroid.Module) or isinstance(node.scope(), astroid.ClassDef):
                 self.add_message("W9902", node=node)
 
 # Extend LoggingChecker to check translated logging strings
