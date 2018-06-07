@@ -14,7 +14,7 @@
 %endif
 
 Name:      python-%{srcname}
-Version:   0.15
+Version:   0.16
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -118,6 +118,14 @@ make PYTHON=%{__python3} check
 %endif
 
 %changelog
+* Thu Jun 07 2018 Vojtech Trefny <vtrefny@redhat.com> - 0.16-1
+- Use new astroid API (vtrefny)
+- Use new astroid class names (miro)
+- Remove Python 2 subpackage was RHEL > 7 and Fedora > 28 (vtrefny)
+- Add a new pylint executable name to check (vtrefny)
+- Define "srcname" in SPEC (vtrefny)
+- Fix Python 2 dependencies (vtrefny)
+
 * Mon Jun 12 2017 Vojtech Trefny <vtrefny@redhat.com> - 0.15-1
 - Add python2-pylint subpackage (vtrefny)
 - Make pocketlint python2 compatible (vtrefny)
