@@ -292,7 +292,7 @@ class PocketLinter(object):
 
         for line in lines:
             # This is not an error message.  Ignore it.
-            if line.startswith("*****") or not line.strip():
+            if line.startswith("*****") or line.startswith("Using config file") or not line.strip():
                 continue
             else:
                 validError = True
