@@ -14,7 +14,7 @@
 %endif
 
 Name:      python-%{srcname}
-Version:   0.16
+Version:   0.17
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -118,6 +118,9 @@ make PYTHON=%{__python3} check
 %endif
 
 %changelog
+* Mon Sep 17 2018 Vojtech Trefny <vtrefny@redhat.com> - 0.17-1
+- Ignore config file line printed by pylint (vtrefny)
+
 * Thu Jun 07 2018 Vojtech Trefny <vtrefny@redhat.com> - 0.16-1
 - Use new astroid API (vtrefny)
 - Use new astroid class names (miro)
