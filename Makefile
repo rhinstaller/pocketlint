@@ -28,6 +28,18 @@ archive: check tag
 	gzip -9 $(PKGNAME)-$(VERSION).tar
 	@echo "The archive is in $(PKGNAME)-$(VERSION).tar.gz"
 
+release-pypi:
+	if ! $(PYTHON) setup.py sdist bdist_wheel; then \
+		echo ""; \
+		echo Distribution package build failed! Please verify that you have \'python3-wheel\' and \'python3-setuptools\' installed. >&2; \
+		exit 1; \
+	fi
+	if ! $(PYTHON) -m twine upload dist/*; then \
+		echo ""; \
+		echo Package upload failed! Make sure the \'twine tool\' is installed and you are registered >&2; \
+		exit 1; \
+	fi
+
 local:
 	@rm -rf $(PKGNAME)-$(VERSION).tar.gz
 	@rm -rf /tmp/$(PKGNAME)-$(VERSION) /tmp/$(PKGNAME)
