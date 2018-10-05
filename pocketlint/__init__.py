@@ -210,18 +210,13 @@ class PocketLinter(object):
 
     @property
     def _pylint_executable(self):
-        # pylint-3 for newer rpm versions
-        # python3-pylint for older version of rpm (before F26)
-        # pylint when installed from pip, not rpm
-        # pylint3 on Debian
-        pylint_binaries = ("pylint-3", "python3-pylint", "pylint3", "pylint")
-        return next((i for i in pylint_binaries if self._command_exists(i)), None)
+        return [sys.executable, "-m", "pylint"]
 
     @property
     def _pylint_version(self):
         exc = self._pylint_executable
-        proc = subprocess.Popen([exc, "--version"],
-                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        exc.append("--version")
+        proc = subprocess.Popen(exc, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdout, _stderr) = proc.communicate()
         pattern = re.compile(r"%s (?P<version>[1-9.]+)" % exc)
         match = pattern.search(stdout.decode())
@@ -312,7 +307,7 @@ class PocketLinter(object):
         return retval
 
     def _run_one(self, filename, args):
-        proc = subprocess.Popen([self._pylint_executable] + self._pylint_args + args + [filename],
+        proc = subprocess.Popen(self._pylint_executable + self._pylint_args + args + [filename],
                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdout, stderr) = proc.communicate()
         output = stdout + stderr
