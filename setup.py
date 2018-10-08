@@ -7,7 +7,7 @@ setup(name='pocketlint', version='0.17',
       author='Chris Lumens', author_email='clumens@redhat.com',
       url='https://github.com/rhinstaller/pocketlint',
       license='COPYING',
-      requires=['pylint'],
+      install_requires=['pylint'],
       long_description=open('README').read(),
       packages=['pocketlint', 'pocketlint.checkers'],
       classifiers=[
