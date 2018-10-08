@@ -1,10 +1,19 @@
 #!/usr/bin/python3
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='pocketlint', version='0.17',
       description='Support for running pylint against projects',
       author='Chris Lumens', author_email='clumens@redhat.com',
       url='https://github.com/rhinstaller/pocketlint',
+      license='COPYING',
       requires=['pylint'],
-      packages=['pocketlint', 'pocketlint.checkers'])
+      long_description=open('README').read(),
+      packages=['pocketlint', 'pocketlint.checkers'],
+      classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "Operating System :: OS Independent",
+        "Topic :: Software Development :: Testing",
+      ],
+      )
