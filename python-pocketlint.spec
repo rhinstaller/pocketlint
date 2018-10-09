@@ -35,11 +35,9 @@ Summary: Support for running pylint against projects (Python 3 version)
 
 BuildRequires: python3-devel
 BuildRequires: python3-pylint
-BuildRequires: python3-six
 
 Requires: python3-polib
 Requires: python3-pylint
-Requires: python3-six
 
 %description -n python3-%{srcname}
 Addon pylint modules and configuration settings for checking the validity of

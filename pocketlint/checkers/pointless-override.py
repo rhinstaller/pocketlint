@@ -20,17 +20,13 @@
 #
 
 import abc
-
-from six import add_metaclass
-
 import astroid
 
 from pylint.checkers import BaseChecker
 from pylint.checkers.utils import check_messages
 from pylint.interfaces import IAstroidChecker
 
-@add_metaclass(abc.ABCMeta)
-class PointlessData(object):
+class PointlessData(object, metaclass=abc.ABCMeta):
 
     _DEF_CLASS = abc.abstractproperty(doc="Class of interesting definitions.")
     message_id = abc.abstractproperty(doc="Pylint message identifier.")
