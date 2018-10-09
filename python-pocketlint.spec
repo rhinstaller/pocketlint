@@ -116,7 +116,7 @@ make PYTHON=%{__python3} check
 %endif
 
 %changelog
-* Út říj 09 2018 Jiri Konecny <jkonecny@redhat.com> - 0.18-1
+* Tue Oct 09 2018 Jiri Konecny <jkonecny@redhat.com> - 0.18-1
 - Use pylint from python which starts pocketlint (jkonecny)
 - Remove python six package and its usage (jkonecny)
 - Add polib to setup.py dependencies (jkonecny)
