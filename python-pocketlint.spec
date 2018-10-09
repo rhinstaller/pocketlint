@@ -14,7 +14,7 @@
 %endif
 
 Name:      python-%{srcname}
-Version:   0.17
+Version:   0.18
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -116,6 +116,14 @@ make PYTHON=%{__python3} check
 %endif
 
 %changelog
+* Út říj 09 2018 Jiri Konecny <jkonecny@redhat.com> - 0.18-1
+- Use pylint from python which starts pocketlint (jkonecny)
+- Remove python six package and its usage (jkonecny)
+- Add polib to setup.py dependencies (jkonecny)
+- Fix requires in setup.py (jkonecny)
+- Add release-pypi target to Makefile (jkonecny)
+- Add missing parts to setup.py (jkonecny)
+
 * Mon Sep 17 2018 Vojtech Trefny <vtrefny@redhat.com> - 0.17-1
 - Ignore config file line printed by pylint (vtrefny)
 
