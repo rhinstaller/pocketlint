@@ -116,7 +116,7 @@ make PYTHON=%{__python3} check
 %endif
 
 %changelog
-* Út říj 09 2018 Jiri Konecny <jkonecny@redhat.com> - 0.18-1
+* Tue Oct 09 2018 Jiri Konecny <jkonecny@redhat.com> - 0.18-1
 - Use pylint from python which starts pocketlint (jkonecny)
 - Remove python six package and its usage (jkonecny)
 - Add polib to setup.py dependencies (jkonecny)
@@ -127,6 +127,12 @@ make PYTHON=%{__python3} check
 * Mon Sep 17 2018 Vojtech Trefny <vtrefny@redhat.com> - 0.17-1
 - Ignore config file line printed by pylint (vtrefny)
 
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.16-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
+* Mon Jun 18 2018 Miro Hrončok <mhroncok@redhat.com> - 0.16-2
+- Rebuilt for Python 3.7
+
 * Thu Jun 07 2018 Vojtech Trefny <vtrefny@redhat.com> - 0.16-1
 - Use new astroid API (vtrefny)
 - Use new astroid class names (miro)
@@ -134,6 +140,15 @@ make PYTHON=%{__python3} check
 - Add a new pylint executable name to check (vtrefny)
 - Define "srcname" in SPEC (vtrefny)
 - Fix Python 2 dependencies (vtrefny)
+
+* Mon Apr 23 2018 Vojtech Trefny <vtrefny@redhat.com> - 0.15-4
+- Remove Python 2 subpackage for RHEL > 7 and Fedora > 28
+
+* Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.15-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
+* Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.15-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
 * Mon Jun 12 2017 Vojtech Trefny <vtrefny@redhat.com> - 0.15-1
 - Add python2-pylint subpackage (vtrefny)
