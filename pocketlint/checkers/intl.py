@@ -96,8 +96,6 @@ class IntlLoggingChecker(LoggingChecker):
                        logging format messages extended for translated strings")
            }
 
-    options = ()
-
     @check_messages('translated-log')
     def visit_call(self, node):
         if len(node.args) >= 1 and isinstance(node.args[0], astroid.Call) and \
@@ -114,9 +112,10 @@ class IntlLoggingChecker(LoggingChecker):
     def __init__(self, *args, **kwargs):
         LoggingChecker.__init__(self, *args, **kwargs)
 
-        # Just set logging_modules to 'logging', instead of trying to take a parameter
-        # like LoggingChecker
-        self.config.logging_modules = ('logging',)
+        # FIXME: Remove this hack by something what pylint supports.
+        # This hack will avoid crash thanks to the colliding option names. The best
+        # solution would be when pylint supports inheritance of the existing checkers.
+        self.options = ()
 
 # Extend StringFormatChecker to check translated format strings
 class IntlStringFormatChecker(StringFormatChecker):
