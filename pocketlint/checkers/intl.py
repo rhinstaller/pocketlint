@@ -31,6 +31,7 @@ from copy import copy
 
 translationMethods = frozenset(["_", "N_", "P_", "C_", "CN_", "CP_"])
 
+
 # Returns a list of the message strings for a given translation method call
 def _get_message_strings(node):
     msgstrs = []
@@ -53,6 +54,7 @@ def _get_message_strings(node):
             msgstrs.append(node.args[2].value)
 
     return msgstrs
+
 
 class IntlChecker(BaseChecker):
     __implements__ = (IAstroidChecker, )
@@ -84,6 +86,7 @@ class IntlChecker(BaseChecker):
         if isinstance(node.func, astroid.Name) and node.func.name == "_":
             if isinstance(node.scope(), astroid.Module) or isinstance(node.scope(), astroid.ClassDef):
                 self.add_message("W9902", node=node)
+
 
 # Extend LoggingChecker to check translated logging strings
 class IntlLoggingChecker(LoggingChecker):
@@ -117,6 +120,7 @@ class IntlLoggingChecker(LoggingChecker):
         # solution would be when pylint supports inheritance of the existing checkers.
         self.options = ()
 
+
 # Extend StringFormatChecker to check translated format strings
 class IntlStringFormatChecker(StringFormatChecker):
     __implements__ = (IAstroidChecker,)
@@ -139,6 +143,7 @@ class IntlStringFormatChecker(StringFormatChecker):
                 copynode = copy(node)
                 copynode.left = astroid.Const(formatstr)
                 StringFormatChecker.visit_binop(self, copynode)
+
 
 def register(linter):
     """required method to auto register this checker """

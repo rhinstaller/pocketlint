@@ -26,6 +26,7 @@ from pylint.checkers import BaseChecker
 from pylint.checkers.utils import check_messages
 from pylint.interfaces import IAstroidChecker
 
+
 class PointlessData(object, metaclass=abc.ABCMeta):
 
     _DEF_CLASS = abc.abstractproperty(doc="Class of interesting definitions.")
@@ -107,6 +108,7 @@ class PointlessData(object, metaclass=abc.ABCMeta):
         """
         raise NotImplementedError()
 
+
 class PointlessFunctionDefinition(PointlessData):
     """ Looking for pointless function definitions. """
 
@@ -130,6 +132,7 @@ class PointlessFunctionDefinition(PointlessData):
     @staticmethod
     def _extract_targets(node):
         yield node.name
+
 
 class PointlessAssignment(PointlessData):
 
@@ -191,6 +194,7 @@ class PointlessAssignment(PointlessData):
     def _extract_targets(node):
         for target in node.targets:
             yield target.name
+
 
 class PointlessClassAttributeOverrideChecker(BaseChecker):
     """ If the nearest definition of the class attribute in the MRO assigns
@@ -266,6 +270,7 @@ class PointlessClassAttributeOverrideChecker(BaseChecker):
                         if checker.check_equal(value, match):
                             self.add_message(checker.message_id, node=value, args=(name,a.name))
                         break
+
 
 def register(linter):
     linter.register_checker(PointlessClassAttributeOverrideChecker(linter))

@@ -25,6 +25,7 @@ from pylint.checkers import BaseChecker
 from pylint.checkers.utils import check_messages
 from pylint.interfaces import IAstroidChecker
 
+
 class PreconfChecker(BaseChecker):
     __implements__ = (IAstroidChecker, )
     name = "Yum preconf"
@@ -38,6 +39,7 @@ class PreconfChecker(BaseChecker):
         if node.attrname == "preconf":
             if not isinstance(node.scope(), astroid.FunctionDef) or not node.scope().name == "_resetYum":
                 self.add_message("W9910", node=node)
+
 
 def register(linter):
     """required method to auto register this checker """
