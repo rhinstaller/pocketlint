@@ -26,6 +26,7 @@ __all__ = ["markup_nodes", "is_markup", "markup_match"]
 # "a" isn't actually pango markup, but GtkLabel uses it
 markup_nodes = ["markup", "a", "b", "big", "i", "s", "span", "sub", "sup", "small", "tt", "u"]
 
+
 # Check to see if a string looks like Pango markup, no validation
 def is_markup(test_string):
     if isinstance(test_string, bytes):
@@ -33,6 +34,7 @@ def is_markup(test_string):
 
     return any(re.search(r'<\s*%s(\s|>)' % node_type, test_string)
             for node_type in markup_nodes)
+
 
 # Verify that the translation of a markup string looks more or less like the original
 def markup_match(orig_markup, xlated_markup):
@@ -67,6 +69,7 @@ def markup_match(orig_markup, xlated_markup):
     attr_list2 = sorted(attr_count2.elements())
 
     return (name_list1 == name_list2) and (attr_list1 == attr_list2)
+
 
 # Check that the markup is needed at all.
 # The input is a parsed ElementTree of the string '<markup>pango markup goes here</markup>'

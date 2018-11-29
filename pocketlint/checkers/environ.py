@@ -27,6 +27,7 @@ from pylint.interfaces import IAstroidChecker
 
 import os
 
+
 class EnvironChecker(BaseChecker):
     __implements__ = (IAstroidChecker,)
     name = "environ"
@@ -101,6 +102,7 @@ class EnvironChecker(BaseChecker):
 
             if self._is_environ(target.value):
                 self.add_message("environment-modify", node=node)
+
 
 def register(linter):
     """required method to auto register this checker """

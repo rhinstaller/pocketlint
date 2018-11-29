@@ -31,6 +31,7 @@ except ImportError:
     print("You need to install the python-polib package to read translations")
     raise
 
+
 class PODict(object):
     def __init__(self, filename):
         """Create a new dictionary of translations from a po file."""
@@ -59,6 +60,7 @@ class PODict(object):
 
     def get(self, key, context=None):
         return self._dict[context][key]
+
 
 # Return a dictionary of PODict objects for each language in a po directory
 def translate_all(podir):

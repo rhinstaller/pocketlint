@@ -4,6 +4,7 @@ import sys
 
 from pocketlint import PocketLintConfig, PocketLinter
 
+
 class PocketLintPocketLintConfig(PocketLintConfig):
     @property
     def pylintPlugins(self):
@@ -12,6 +13,7 @@ class PocketLintPocketLintConfig(PocketLintConfig):
         # threads are not involved (yet).
         retval.remove("pocketlint.checkers.environ")
         return retval
+
 
 if __name__ == "__main__":
     conf = PocketLintPocketLintConfig()

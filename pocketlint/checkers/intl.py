@@ -31,6 +31,7 @@ from copy import copy
 
 translationMethods = frozenset(["_", "N_", "P_", "C_", "CN_", "CP_"])
 
+
 # Returns a list of the message strings for a given translation method call
 def _get_message_strings(node):
     msgstrs = []
@@ -53,6 +54,7 @@ def _get_message_strings(node):
             msgstrs.append(node.args[2].value)
 
     return msgstrs
+
 
 class IntlChecker(BaseChecker):
     __implements__ = (IAstroidChecker, )
@@ -85,6 +87,7 @@ class IntlChecker(BaseChecker):
             if isinstance(node.scope(), astroid.Module) or isinstance(node.scope(), astroid.ClassDef):
                 self.add_message("W9902", node=node)
 
+
 # Extend LoggingChecker to check translated logging strings
 class IntlLoggingChecker(LoggingChecker):
     __implements__ = (IAstroidChecker,)
@@ -95,8 +98,6 @@ class IntlLoggingChecker(LoggingChecker):
                       "This message is not emitted itself, but can be used to control the display of \
                        logging format messages extended for translated strings")
            }
-
-    options = ()
 
     @check_messages('translated-log')
     def visit_call(self, node):
@@ -114,9 +115,11 @@ class IntlLoggingChecker(LoggingChecker):
     def __init__(self, *args, **kwargs):
         LoggingChecker.__init__(self, *args, **kwargs)
 
-        # Just set logging_modules to 'logging', instead of trying to take a parameter
-        # like LoggingChecker
-        self.config.logging_modules = ('logging',)
+        # FIXME: Remove this hack by something what pylint supports.
+        # This hack will avoid crash thanks to the colliding option names. The best
+        # solution would be when pylint supports inheritance of the existing checkers.
+        self.options = ()
+
 
 # Extend StringFormatChecker to check translated format strings
 class IntlStringFormatChecker(StringFormatChecker):
@@ -140,6 +143,7 @@ class IntlStringFormatChecker(StringFormatChecker):
                 copynode = copy(node)
                 copynode.left = astroid.Const(formatstr)
                 StringFormatChecker.visit_binop(self, copynode)
+
 
 def register(linter):
     """required method to auto register this checker """

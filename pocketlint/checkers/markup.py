@@ -35,6 +35,7 @@ escapeMethods = ["escape_markup"]
 i18n_funcs = ["_", "N_", "P_", "C_", "CN_", "CP_"]
 i18n_ctxt_funcs = ["C_", "CN_", "CP_"]
 
+
 class MarkupChecker(BaseChecker):
     __implements__ = (IAstroidChecker,)
     name = "pango-markup"
@@ -111,6 +112,7 @@ class MarkupChecker(BaseChecker):
                         self.add_message("W9922", node=item[1])
             else:
                 self.add_message("W9922", node=formatOp)
+
 
 def register(linter):
     """required method to auto register this checker """

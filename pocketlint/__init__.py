@@ -32,6 +32,7 @@ import tempfile
 
 from distutils.version import LooseVersion
 
+
 class PocketLintConfig(object):
     """Configuration object that a project should use to tell pylint how
        to operate.  Instance attributes:
@@ -104,6 +105,7 @@ class PocketLintConfig(object):
         """
         return set()
 
+
 class FalsePositive(object):
     """An object used in filtering out incorrect results from pylint.  Pass in
        a regular expression matching a pylint error message that should be
@@ -114,6 +116,7 @@ class FalsePositive(object):
         self.regex = regex
         self.used = 0
 
+
 class PocketLinter(object):
     """Main class that does the hard work of running pylint on a project.
        Pass an instance of PocketLintConfig to a new instance of this class
@@ -122,7 +125,7 @@ class PocketLinter(object):
 
        from pocketlint import PocketLintConfig, PocketLinter
 
-       classs FooLintConfig(PocketLintConfig):
+       class FooLintConfig(PocketLintConfig):
           ....
 
        if __name__ == "__main__":
