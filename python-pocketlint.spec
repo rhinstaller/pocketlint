@@ -14,7 +14,7 @@
 %endif
 
 Name:      python-%{srcname}
-Version:   0.18
+Version:   0.19
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -116,6 +116,13 @@ make PYTHON=%{__python3} check
 %endif
 
 %changelog
+* Thu Nov 29 2018 Jiri Konecny <jkonecny@redhat.com> - 0.19-1
+- Make code more pep8 (jkonecny)
+- Adapt to the new LoggingChecker class (jkonecny)
+- Make bumpver lang independent (jkonecny)
+- Backport spec file from dist-git (jkonecny)
+- Spec file changelog date must be English (jkonecny)
+
 * Tue Oct 09 2018 Jiri Konecny <jkonecny@redhat.com> - 0.18-1
 - Use pylint from python which starts pocketlint (jkonecny)
 - Remove python six package and its usage (jkonecny)
