@@ -37,11 +37,17 @@ class PocketLintConfig(object):
     """Configuration object that a project should use to tell pylint how
        to operate.  Instance attributes:
 
-       falsePositives -- A list of FalsePositive objects for filtering
-                         incorrect pylint error messages.
+       falsePositives    -- A list of FalsePositive objects for filtering
+                            incorrect pylint error messages.
+                            Default: []
+       loadAllExtensions -- Load all the extensions to the pylint. This will resolve
+                            I1101(c-extension-no-member) messages but it could be
+                            potentially dangerous. See man pylint --unsafe-load-any-extension
+                            Default: False
     """
     def __init__(self):
         self.falsePositives = []
+        self.loadAllExtensions = False
 
     @property
     def disabledOptions(self):
@@ -198,6 +204,9 @@ class PocketLinter(object):
 
         if self._config.extraArgs:
             args += self._config.extraArgs
+
+        if self._config.loadAllExtensions:
+            args += ["--unsafe-load-any-extension=yes"]
 
         # since 1.7 pylint by default prints "score", we need to disable it
         if self._pylint_version >= LooseVersion("1.7.0"):
