@@ -15,7 +15,7 @@
 
 Name:      python-%{srcname}
 Version:   0.19
-Release:   1%{?dist}
+Release:   6%{?dist}
 Summary:   Support for running pylint against projects
 
 License:   GPLv2+
@@ -75,7 +75,7 @@ Python-based source projects.
 %endif
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%autosetup -n %{srcname}-%{version} -p1
 
 %build
 %if %{with python2}
@@ -116,6 +116,21 @@ make PYTHON=%{__python3} check
 %endif
 
 %changelog
+* Fri Aug 30 2019 Jiri Konecny <jkonecny@redhat.com> - 0.19-6
+- Replace temporary by somthing what will change only build not usage
+
+* Wed Aug 28 2019 Vojtech Trefny <vtrefny@redhat.com> - 0.19-5
+- Temporary mark E1121 (too-many-function-args) as false positive
+
+* Mon Aug 19 2019 Miro Hrončok <mhroncok@redhat.com> - 0.19-4
+- Rebuilt for Python 3.8
+
+* Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.19-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
+* Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.19-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Thu Nov 29 2018 Jiri Konecny <jkonecny@redhat.com> - 0.19-1
 - Make code more pep8 (jkonecny)
 - Adapt to the new LoggingChecker class (jkonecny)
