@@ -14,8 +14,8 @@
 %endif
 
 Name:      python-%{srcname}
-Version:   0.19
-Release:   6%{?dist}
+Version:   0.20
+Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
 License:   GPLv2+
@@ -116,6 +116,10 @@ make PYTHON=%{__python3} check
 %endif
 
 %changelog
+* Fri Aug 30 2019 Jiri Konecny <jkonecny@redhat.com> - 0.20-1
+- Fix reading pylint version (vtrefny)
+- Add API to enable all C extensions (jkonecny)
+
 * Fri Aug 30 2019 Jiri Konecny <jkonecny@redhat.com> - 0.19-6
 - Replace temporary by somthing what will change only build not usage
 
