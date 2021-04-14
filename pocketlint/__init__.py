@@ -57,10 +57,7 @@ class PocketLintConfig(object):
            to add or remove as desired.  This list should strive to be empty,
            though.
         """
-        return [ "W0110",           # map/filter on lambda could be replaced by comprehension
-                 "W0123",           # Use of eval
-                 "W0141",           # Used builtin function %r
-                 "W0142",           # Used * or ** magic
+        return  ["W0123",           # Use of eval
                  "W0212",           # Access to a protected member %s of a client class
                  "W0511",           # Used when a warning note as FIXME or XXX is detected
                  "W0603",           # Using the global statement
@@ -68,7 +65,6 @@ class PocketLintConfig(object):
                  "W0614",           # Unused import %s from wildcard import
                  "E0012",           # Bad inline option given to pylint
                  "I0011",           # Locally disabling %s
-                 "I0012",           # Locally enabling %s
                  "I0013",           # Ignoring entire file
                ]
 
