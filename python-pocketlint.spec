@@ -19,6 +19,7 @@ Python-based source projects.
 Summary: Support for running pylint against projects (Python 3 version)
 %{?python_provide:%python_provide python3-%{srcname}}
 
+BuildRequires: make
 BuildRequires: python3-devel
 BuildRequires: python3-pylint
 BuildRequires: python3-setuptools
@@ -54,12 +55,30 @@ make PYTHON=%{__python3} check
 - Run tests in GitHub workflow (martin)
 - Add build dependency on python3-setuptools (vtrefny)
 
+* Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.20-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
+* Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.20-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
+* Wed Jun 24 2020 Vojtech Trefny <vtrefny@redhat.com> - 0.20-5
+- Add build dependency on python3-setuptools
+
+* Tue May 26 2020 Miro Hrončok <mhroncok@redhat.com> - 0.20-4
+- Rebuilt for Python 3.9
+
+* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.20-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
+* Thu Oct 03 2019 Miro Hrončok <mhroncok@redhat.com> - 0.20-2
+- Rebuilt for Python 3.8.0rc1 (#1748018)
+
 * Fri Aug 30 2019 Jiri Konecny <jkonecny@redhat.com> - 0.20-1
 - Fix reading pylint version (vtrefny)
 - Add API to enable all C extensions (jkonecny)
 
 * Fri Aug 30 2019 Jiri Konecny <jkonecny@redhat.com> - 0.19-6
-- Replace temporary by somthing what will change only build not usage
+- Replace temporary by something what will change only build not usage
 
 * Wed Aug 28 2019 Vojtech Trefny <vtrefny@redhat.com> - 0.19-5
 - Temporary mark E1121 (too-many-function-args) as false positive
