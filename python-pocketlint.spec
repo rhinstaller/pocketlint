@@ -1,7 +1,7 @@
 %global srcname pocketlint
 
 Name:      python-%{srcname}
-Version:   0.20
+Version:   0.21
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -48,6 +48,12 @@ make PYTHON=%{__python3} check
 %{python3_sitelib}/%{srcname}/
 
 %changelog
+* Tue Apr 20 2021 Vojtech Trefny <vtrefny@redhat.com> - 0.21-1
+- spec: Remove Python 2 and make Python 3 non-optional (vtrefny)
+- tests: Fix pocketlint use of removed pylint messages (bcl)
+- Run tests in GitHub workflow (martin)
+- Add build dependency on python3-setuptools (vtrefny)
+
 * Fri Aug 30 2019 Jiri Konecny <jkonecny@redhat.com> - 0.20-1
 - Fix reading pylint version (vtrefny)
 - Add API to enable all C extensions (jkonecny)
