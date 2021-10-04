@@ -8,7 +8,7 @@ setup(name='pocketlint', version='0.21',
       url='https://github.com/rhinstaller/pocketlint',
       license='COPYING',
       install_requires=['pylint', 'polib'],
-      long_description=open('README').read(),
+      long_description=open('README', encoding='utf-8').read(),
       packages=['pocketlint', 'pocketlint.checkers'],
       classifiers=[
         "Programming Language :: Python :: 3",
