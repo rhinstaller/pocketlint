@@ -164,7 +164,7 @@ class PocketLinter(object):
 
             for f in files:
                 try:
-                    with open(root + "/" + f) as fo:
+                    with open(root + "/" + f, encoding='utf-8') as fo:
                         lines = fo.readlines()
                 except UnicodeDecodeError:
                     # If we couldn't open this file, just skip it.  It wasn't
@@ -344,7 +344,7 @@ class PocketLinter(object):
             files = self._files
 
         if self._pylint_log:
-            fo = open("pylint-log", "w")
+            fo = open("pylint-log", "w", encoding='utf-8')
         else:
             fo = None
 

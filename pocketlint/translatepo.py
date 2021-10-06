@@ -66,7 +66,7 @@ class PODict(object):
 def translate_all(podir):
     podicts = {}
 
-    with open(os.path.join(podir, 'LINGUAS')) as linguas:
+    with open(os.path.join(podir, 'LINGUAS'), encoding='utf-8') as linguas:
         for line in linguas.readlines():
             if re.match(r'^#', line):
                 continue
