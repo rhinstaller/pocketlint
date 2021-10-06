@@ -1,7 +1,7 @@
 %global srcname pocketlint
 
 Name:      python-%{srcname}
-Version:   0.21
+Version:   0.22
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -49,6 +49,11 @@ make PYTHON=%{__python3} check
 %{python3_sitelib}/%{srcname}/
 
 %changelog
+* Wed Oct 06 2021 Vojtech Trefny <vtrefny@redhat.com> - 0.22-1
+- Specify encoding for open() (vtrefny)
+- Do not use Fedora container to GH checkout action (jkonecny)
+- Sync spec with downstream (vtrefny)
+
 * Tue Apr 20 2021 Vojtech Trefny <vtrefny@redhat.com> - 0.21-1
 - spec: Remove Python 2 and make Python 3 non-optional (vtrefny)
 - tests: Fix pocketlint use of removed pylint messages (bcl)
