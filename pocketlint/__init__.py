@@ -30,7 +30,7 @@ import subprocess
 import sys
 import tempfile
 
-from distutils.version import LooseVersion
+from packaging.version import Version
 
 
 class PocketLintConfig(object):
@@ -205,7 +205,7 @@ class PocketLinter(object):
             args += ["--unsafe-load-any-extension=yes"]
 
         # since 1.7 pylint by default prints "score", we need to disable it
-        if self._pylint_version >= LooseVersion("1.7.0"):
+        if self._pylint_version >= Version("1.7.0"):
             args += ["-s", "n"]
 
         return args
@@ -229,9 +229,9 @@ class PocketLinter(object):
         pattern = re.compile(r".+ (?P<version>[1-9.]+)")
         match = pattern.search(stdout.decode())
         if match:
-            return LooseVersion(match.group("version"))
+            return Version(match.group("version"))
         else:
-            return LooseVersion("0")
+            return Version("0")
 
     def _parseArgs(self):
         # Really stupid argument processing - strip off the first argument (that's
