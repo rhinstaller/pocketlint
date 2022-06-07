@@ -226,7 +226,7 @@ class PocketLinter(object):
         exc.append("--version")
         proc = subprocess.Popen(exc, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdout, _stderr) = proc.communicate()
-        pattern = re.compile(r".+ (?P<version>[1-9.]+)")
+        pattern = re.compile(r".+ (?P<version>[0-9.]+)")
         match = pattern.search(stdout.decode())
         if match:
             return Version(match.group("version"))
