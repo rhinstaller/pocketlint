@@ -1,7 +1,7 @@
 %global srcname pocketlint
 
 Name:      python-%{srcname}
-Version:   0.22
+Version:   0.23
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -51,6 +51,11 @@ make PYTHON=%{__python3} check
 %{python3_sitelib}/%{srcname}/
 
 %changelog
+* Fri Jul 01 2022 Vojtech Trefny <vtrefny@redhat.com> - 0.23-1
+- Fix reading pylint version (vtrefny)
+- Add various build and test artifacts to .gitignore (vtrefny)
+- Use packaging.version instead of distutils.version (vtrefny)
+
 * Wed Oct 06 2021 Vojtech Trefny <vtrefny@redhat.com> - 0.22-1
 - Specify encoding for open() (vtrefny)
 - Do not use Fedora container to GH checkout action (jkonecny)

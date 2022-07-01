@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-setup(name='pocketlint', version='0.22',
+setup(name='pocketlint', version='0.23',
       description='Support for running pylint against projects',
       author='Chris Lumens', author_email='clumens@redhat.com',
       url='https://github.com/rhinstaller/pocketlint',
