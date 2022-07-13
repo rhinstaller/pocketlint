@@ -1,7 +1,7 @@
 %global srcname pocketlint
 
 Name:      python-%{srcname}
-Version:   0.23
+Version:   0.24
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -51,6 +51,9 @@ make PYTHON=%{__python3} check
 %{python3_sitelib}/%{srcname}/
 
 %changelog
+* Wed Jul 13 2022 Jiri Konecny <jkonecny@redhat.com> - 0.24-1
+- Add packaging to setup.py dependencies (vslavik)
+
 * Fri Jul 01 2022 Vojtech Trefny <vtrefny@redhat.com> - 0.23-1
 - Fix reading pylint version (vtrefny)
 - Add various build and test artifacts to .gitignore (vtrefny)
