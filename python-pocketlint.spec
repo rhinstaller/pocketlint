@@ -5,7 +5,7 @@ Version:   0.24
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
-License:   GPLv2+
+License:   GPL-2.0-or-later
 Url:       https://github.com/rhinstaller/%{srcname}
 Source0:   https://github.com/rhinstaller/%{srcname}/archive/%{version}/%{srcname}-%{version}.tar.gz
 
