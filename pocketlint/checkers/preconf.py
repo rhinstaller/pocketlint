@@ -23,11 +23,9 @@ import astroid
 
 from pylint.checkers import BaseChecker
 from pylint.checkers.utils import only_required_for_messages
-from pylint.interfaces import IAstroidChecker
 
 
 class PreconfChecker(BaseChecker):
-    __implements__ = (IAstroidChecker, )
     name = "Yum preconf"
     msgs = {"W9910": ("Accessing yum.preconf outside of _resetYum",
                       "bad-preconf-access",

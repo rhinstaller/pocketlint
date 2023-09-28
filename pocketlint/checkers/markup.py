@@ -23,7 +23,6 @@ import astroid
 
 from pylint.checkers import BaseChecker
 from pylint.checkers.utils import only_required_for_messages
-from pylint.interfaces import IAstroidChecker
 
 import xml.etree.ElementTree as ET
 
@@ -37,7 +36,6 @@ i18n_ctxt_funcs = ["C_", "CN_", "CP_"]
 
 
 class MarkupChecker(BaseChecker):
-    __implements__ = (IAstroidChecker,)
     name = "pango-markup"
     msgs = {"W9920" : ("Found invalid pango markup",
                        "invalid-markup",

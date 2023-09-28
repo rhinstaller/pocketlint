@@ -23,13 +23,11 @@ import astroid
 
 from pylint.checkers import BaseChecker
 from pylint.checkers.utils import only_required_for_messages, safe_infer
-from pylint.interfaces import IAstroidChecker
 
 import os
 
 
 class EnvironChecker(BaseChecker):
-    __implements__ = (IAstroidChecker,)
     name = "environ"
     msgs = {"W9940" : ("Found potentially unsafe modification of environment",
                        "environment-modify",

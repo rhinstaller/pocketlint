@@ -24,7 +24,6 @@ import astroid
 
 from pylint.checkers import BaseChecker
 from pylint.checkers.utils import only_required_for_messages
-from pylint.interfaces import IAstroidChecker
 
 
 class PointlessData(object, metaclass=abc.ABCMeta):
@@ -241,9 +240,6 @@ class PointlessClassAttributeOverrideChecker(BaseChecker):
         The analysis is both incomplete and unsound because it expects that
         assignments will always be made by means of the same syntax.
     """
-
-    __implements__ = (IAstroidChecker,)
-
     name = "pointless class attribute override checker"
     msgs = {
        "W9951":

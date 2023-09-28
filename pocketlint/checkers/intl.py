@@ -25,7 +25,6 @@ from pylint.checkers import BaseChecker
 from pylint.checkers.strings import StringFormatChecker
 from pylint.checkers.logging import LoggingChecker
 from pylint.checkers.utils import only_required_for_messages
-from pylint.interfaces import IAstroidChecker
 
 from copy import copy
 
@@ -57,7 +56,6 @@ def _get_message_strings(node):
 
 
 class IntlChecker(BaseChecker):
-    __implements__ = (IAstroidChecker, )
     name = "internationalization"
     msgs = {"W9901": ("Found % in a call to a _() method",
                       "found-percent-in-_",
@@ -90,8 +88,6 @@ class IntlChecker(BaseChecker):
 
 # Extend LoggingChecker to check translated logging strings
 class IntlLoggingChecker(LoggingChecker):
-    __implements__ = (IAstroidChecker,)
-
     name = 'intl-logging'
     msgs = {'W9903': ("Fake message for translated E/W120* checks",
                       "translated-log",
@@ -123,8 +119,6 @@ class IntlLoggingChecker(LoggingChecker):
 
 # Extend StringFormatChecker to check translated format strings
 class IntlStringFormatChecker(StringFormatChecker):
-    __implements__ = (IAstroidChecker,)
-
     name = 'intl-string'
     msgs = {'W9904': ("Fake message for translated E/W130* checks",
                       "translated-format",
