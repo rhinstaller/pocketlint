@@ -23,7 +23,7 @@ import abc
 import astroid
 
 from pylint.checkers import BaseChecker
-from pylint.checkers.utils import check_messages
+from pylint.checkers.utils import only_required_for_messages
 from pylint.interfaces import IAstroidChecker
 
 
@@ -260,7 +260,7 @@ class PointlessClassAttributeOverrideChecker(BaseChecker):
        )
     }
 
-    @check_messages("W9951", "W9952")
+    @only_required_for_messages("W9951", "W9952")
     def visit_class(self, node):
         for checker in (PointlessAssignment, PointlessFunctionDefinition):
             for (name, value) in checker.get_data(node):

@@ -22,7 +22,7 @@
 import astroid
 
 from pylint.checkers import BaseChecker
-from pylint.checkers.utils import check_messages, safe_infer
+from pylint.checkers.utils import only_required_for_messages, safe_infer
 from pylint.interfaces import IAstroidChecker
 
 import os
@@ -51,7 +51,7 @@ class EnvironChecker(BaseChecker):
 
         return False
 
-    @check_messages("environment-modify")
+    @only_required_for_messages("environment-modify")
     def visit_assign(self, node):
         if not isinstance(node, astroid.Assign):
             return
@@ -64,7 +64,7 @@ class EnvironChecker(BaseChecker):
             if self._is_environ(target.value):
                 self.add_message("environment-modify", node=node)
 
-    @check_messages("environment-modify")
+    @only_required_for_messages("environment-modify")
     def visit_call(self, node):
         # Check both for uses of os.putenv and os.setenv and modifying calls
         # to the os.environ object, such as os.environ.update
@@ -90,7 +90,7 @@ class EnvironChecker(BaseChecker):
                 function_node.name in ("clear", "pop", "popitem", "setdefault", "update"):
             self.add_message("environment-modify", node=node)
 
-    @check_messages("environment-modify")
+    @only_required_for_messages("environment-modify")
     def visit_delete(self, node):
         if not isinstance(node, astroid.Delete):
             return

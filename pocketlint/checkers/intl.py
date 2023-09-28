@@ -24,7 +24,7 @@ import astroid
 from pylint.checkers import BaseChecker
 from pylint.checkers.strings import StringFormatChecker
 from pylint.checkers.logging import LoggingChecker
-from pylint.checkers.utils import check_messages
+from pylint.checkers.utils import only_required_for_messages
 from pylint.interfaces import IAstroidChecker
 
 from copy import copy
@@ -67,7 +67,7 @@ class IntlChecker(BaseChecker):
                       "Calling _ at the module or class level results in translations to the wrong language")
            }
 
-    @check_messages("found-percent-in-_")
+    @only_required_for_messages("found-percent-in-_")
     def visit_binop(self, node):
         if node.op != "%":
             return
@@ -80,7 +80,7 @@ class IntlChecker(BaseChecker):
 
             curr = curr.parent
 
-    @check_messages("found-_-in-module-class")
+    @only_required_for_messages("found-_-in-module-class")
     def visit_call(self, node):
         # The first test skips internal functions like getattr.
         if isinstance(node.func, astroid.Name) and node.func.name == "_":
@@ -99,7 +99,7 @@ class IntlLoggingChecker(LoggingChecker):
                        logging format messages extended for translated strings")
            }
 
-    @check_messages('translated-log')
+    @only_required_for_messages('translated-log')
     def visit_call(self, node):
         if len(node.args) >= 1 and isinstance(node.args[0], astroid.Call) and \
                 getattr(node.args[0].func, "name", "") in translationMethods:
@@ -132,7 +132,7 @@ class IntlStringFormatChecker(StringFormatChecker):
                        string format messages extended for translated strings")
            }
 
-    @check_messages('translated-format')
+    @only_required_for_messages('translated-format')
     def visit_binop(self, node):
         if node.op != '%':
             return
