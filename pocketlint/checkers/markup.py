@@ -22,8 +22,7 @@
 import astroid
 
 from pylint.checkers import BaseChecker
-from pylint.checkers.utils import check_messages
-from pylint.interfaces import IAstroidChecker
+from pylint.checkers.utils import only_required_for_messages
 
 import xml.etree.ElementTree as ET
 
@@ -37,7 +36,6 @@ i18n_ctxt_funcs = ["C_", "CN_", "CP_"]
 
 
 class MarkupChecker(BaseChecker):
-    __implements__ = (IAstroidChecker,)
     name = "pango-markup"
     msgs = {"W9920" : ("Found invalid pango markup",
                        "invalid-markup",
@@ -73,7 +71,7 @@ class MarkupChecker(BaseChecker):
     def __init__(self, linter=None):
         BaseChecker.__init__(self, linter)
 
-    @check_messages("invalid-markup", "invalid-markup-element", "unescaped-markup", "unnecessary-markup")
+    @only_required_for_messages("invalid-markup", "invalid-markup-element", "unescaped-markup", "unnecessary-markup")
     def visit_const(self, node):
         if not isinstance(node.value, (str, bytes)):
             return

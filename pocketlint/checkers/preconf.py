@@ -22,19 +22,17 @@
 import astroid
 
 from pylint.checkers import BaseChecker
-from pylint.checkers.utils import check_messages
-from pylint.interfaces import IAstroidChecker
+from pylint.checkers.utils import only_required_for_messages
 
 
 class PreconfChecker(BaseChecker):
-    __implements__ = (IAstroidChecker, )
     name = "Yum preconf"
     msgs = {"W9910": ("Accessing yum.preconf outside of _resetYum",
                       "bad-preconf-access",
                       "Accessing yum.preconf outside of _resetYum will cause tracebacks"),
            }
 
-    @check_messages("bad-preconf-access")
+    @only_required_for_messages("bad-preconf-access")
     def visit_getattr(self, node):
         if node.attrname == "preconf":
             if not isinstance(node.scope(), astroid.FunctionDef) or not node.scope().name == "_resetYum":
