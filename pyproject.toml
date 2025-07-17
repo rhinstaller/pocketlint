@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pocketlint"
+version = "0.25"
+description = "Support for running pylint against projects"
+readme = "README"
+license = {file = "COPYING"}
+dependencies = ["pylint", "polib", "packaging"]
+authors = [
+  {name = "Chris Lumens", email = "clumens@redhat.com"}
+]
+maintainers = [
+  {name = "Jiri Konecny", email = "jkonecny@redhat.com"},
+  {name = "Vojtech Trefny", email = "vtrefny@redhat.com"}
+]
+classifiers = [
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "Operating System :: OS Independent",
+        "Topic :: Software Development :: Testing",
+]
+
+[project.urls]
+source = "https://github.com/rhinstaller/pocketlint"
+
+[tool.setuptools]
+packages = ["pocketlint", "pocketlint.checkers"]
