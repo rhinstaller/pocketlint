@@ -61,7 +61,7 @@ bumpver:
 	(head -n $$cl python-${PKGNAME}.spec ; echo "$$DATELINE" ; make --quiet rpmlog 2>/dev/null ; echo ""; cat speclog) > python-${PKGNAME}.spec.new ; \
 	mv python-${PKGNAME}.spec.new python-${PKGNAME}.spec ; rm -f speclog ; \
 	sed -i "s/Version:   $(VERSION)/Version:   $$NEWVERSION/" python-${PKGNAME}.spec ; \
-	sed -i "s/version='$(VERSION)'/version='$$NEWVERSION'/" setup.py
+	sed -i "s/version = \"$(VERSION)\"/version = \"$$NEWVERSION\"/" pyproject.toml
 
 ci:
 	PYTHONPATH=. tests/pylint/runpylint.py
