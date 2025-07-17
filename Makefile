@@ -17,7 +17,7 @@ clean:
 	$(PYTHON) setup.py -q clean --all
 
 install:
-	$(PYTHON) setup.py install --root=$(DESTDIR) --skip-build
+	$(PYTHON) -m pip install . --root=$(DESTDIR) --no-deps --no-build-isolation
 
 tag:
 	git tag -a -m "Tag as $(VERSION)" -f $(VERSION)
@@ -29,9 +29,9 @@ archive: check tag
 	@echo "The archive is in $(PKGNAME)-$(VERSION).tar.gz"
 
 release-pypi:
-	if ! $(PYTHON) setup.py sdist bdist_wheel; then \
+	if ! $(PYTHON) -m build --sdist --wheel; then \
 		echo ""; \
-		echo Distribution package build failed! Please verify that you have \'python3-wheel\' and \'python3-setuptools\' installed. >&2; \
+		echo Distribution package build failed! Please verify that you have \'python3-build\' and \'python3-setuptools\' installed. >&2; \
 		exit 1; \
 	fi
 	if ! $(PYTHON) -m twine upload dist/*; then \
@@ -44,8 +44,8 @@ local:
 	@rm -rf $(PKGNAME)-$(VERSION).tar.gz
 	@rm -rf /tmp/$(PKGNAME)-$(VERSION) /tmp/$(PKGNAME)
 	@dir=$$PWD; cp -a $$dir /tmp/$(PKGNAME)-$(VERSION)
-	@cd /tmp/$(PKGNAME)-$(VERSION) ; $(PYTHON) setup.py -q sdist
-	@cp /tmp/$(PKGNAME)-$(VERSION)/dist/$(PKGNAME)-$(VERSION).tar.gz .
+	@cd /tmp/$(PKGNAME)-$(VERSION) ; $(PYTHON) -m build --sdist --outdir .
+	@cp /tmp/$(PKGNAME)-$(VERSION)/$(PKGNAME)-$(VERSION).tar.gz .
 	@rm -rf /tmp/$(PKGNAME)-$(VERSION)
 	@echo "The archive is in $(PKGNAME)-$(VERSION).tar.gz"
 
