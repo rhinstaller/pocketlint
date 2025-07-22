@@ -21,9 +21,7 @@ Summary: Support for running pylint against projects (Python 3 version)
 
 BuildRequires: make
 BuildRequires: python3-devel
-BuildRequires: python3-packaging
 BuildRequires: python3-pylint
-BuildRequires: python3-setuptools
 
 Requires: python3-packaging
 Requires: python3-polib
@@ -36,18 +34,21 @@ Python-based source projects.
 %prep
 %autosetup -n %{srcname}-%{version} -p1
 
+%generate_buildrequires
+%pyproject_buildrequires
+
 %build
-make PYTHON=%{__python3}
+%pyproject_wheel
 
 %install
-make DESTDIR=%{buildroot} PYTHON=%{__python3} install
+%pyproject_install
 
 %check
 make PYTHON=%{__python3} check
 
 %files -n python3-%{srcname}
 %license COPYING
-%{python3_sitelib}/%{srcname}*egg*
+%{python3_sitelib}/%{srcname}*dist-info
 %{python3_sitelib}/%{srcname}/
 
 %changelog
