@@ -1,7 +1,7 @@
 %global srcname pocketlint
 
 Name:      python-%{srcname}
-Version:   0.25
+Version:   0.26
 Release:   1%{?dist}
 Summary:   Support for running pylint against projects
 
@@ -52,6 +52,13 @@ make PYTHON=%{__python3} check
 %{python3_sitelib}/%{srcname}/
 
 %changelog
+* Thu Sep 04 2025 Vojtech Trefny <vtrefny@redhat.com> - 0.26-1
+- Adjust 'make bumpver' to work with pyproject.toml (vtrefny)
+- Move project definitions from setup.py to pyproject.toml (vtrefny)
+- Add basic packit configuration (vtrefny)
+- spec: Use %pyproject macros for build and install (vtrefny)
+- Replace deprecated setup.py commands (vtrefny)
+
 * Mon Oct 02 2023 Vojtech Trefny <vtrefny@redhat.com> - 0.25-1
 - Remove unneeded IAstroidChecker (bcl)
 - Replace check_messages decorator with only_required_for_messages (bcl)
